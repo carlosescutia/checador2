@@ -22,11 +22,15 @@
                         </div>
                     </td>
                     <td>
-                        <?php
-                        $item_eliminar = 'Acceso ' . $accesos_sistema_usuario_item['cod_opcion_sistema'];
-                        $action = base_url("acceso_sistema_usuario/eliminar/") . $accesos_sistema_usuario_item['id_acceso_sistema_usuario'];
-                        ?>
-                        <a href="#" onclick="confirm_delete('<?=$item_eliminar?>','<?=$action?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                        <form class="ui form" method="post" action="/acceso_sistema_usuario/eliminar" id="frm_elim_acu<?=$accesos_sistema_usuario_item['id_acceso_sistema_usuario']?>">
+                            <input type="hidden" name="id_acceso_sistema_usuario" id="id_acceso_sistema_usuario" value="<?= $accesos_sistema_usuario_item['id_acceso_sistema_usuario'] ?>" >
+                            <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('usuario/detalle/'.$usuario['id_usuario']) ?>">
+                            <?php
+                                $mensaje = 'Se eliminará el Acceso: <strong>' . $accesos_sistema_usuario_item['cod_opcion_sistema'] . '</strong>.<br>¿Está seguro?' ;
+                                $forma = '#frm_elim_acu' . $accesos_sistema_usuario_item['id_acceso_sistema_usuario'] ;
+                            ?>
+                            <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                        </form>
                     </td>
                 </tr>
                 <?php endforeach ?>

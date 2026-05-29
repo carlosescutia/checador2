@@ -1,3 +1,10 @@
+/*
+ * Debug: borde rojo en todos los elementos
+* {
+    border: 1px solid red;
+}
+*/
+
 .barra {
     min-height: 50px;
 }
@@ -9,4 +16,27 @@
 
 body .pusher {
     padding-bottom: 20px;
+}
+
+body.pushable {
+    background-color: #ffffff !important;
+}
+
+.redaccion {
+    font-size: 1.2rem;
+    white-space: pre-wrap;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
+.open_image { 
+    cursor: pointer;
+}
+
+.texto-18 {
+    font-size: 1.8rem;
 }

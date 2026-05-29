@@ -10,17 +10,13 @@ class Proceso extends BaseController
 
     public function index()
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
-            $data['error'] = $this->session->getFlashdata('error');
+        $data = [];
+        $data += $this->fn_sis->get_userdata();
+        $data['error'] = $this->session->getFlashdata('error');
 
-            return view('templates/header', $data)
-                .view('proceso/index', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header')
+            .view('proceso/index', $data)
+            .view('templates/footer');
     }
 
 }

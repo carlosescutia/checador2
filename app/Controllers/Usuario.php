@@ -15,125 +15,99 @@ class Usuario extends BaseController
 
     public function index()
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
+        $data['usuarios'] = $this->usuario_model->get_usuarios();
 
-            $data['usuarios'] = $this->usuario_model->get_usuarios();
-
-            return view('templates/header', $data)
-                .view('catalogos/usuario/lista', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header')
+            .view('catalogos/usuario/lista', $data)
+            .view('templates/footer');
     }
 
     public function detalle($id_usuario)
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
+        $data['usuario'] = $this->usuario_model->get_usuario($id_usuario);
+        $data['roles'] = $this->rol_model->get_roles();
+        $data['accesos_sistema_rol'] = $this->acceso_sistema_model->get_accesos_sistema_rol_usuario($id_usuario);
+        $data['accesos_sistema_usuario'] = $this->acceso_sistema_usuario_model->get_accesos_sistema_usuario($id_usuario);
+        $data['opciones_sistema_otorgables'] = $this->opcion_sistema_model->get_opciones_sistema_otorgables();
 
-            $data['usuario'] = $this->usuario_model->get_usuario($id_usuario);
-            $data['roles'] = $this->rol_model->get_roles();
-            $data['accesos_sistema_rol'] = $this->acceso_sistema_model->get_accesos_sistema_rol_usuario($id_usuario);
-            $data['accesos_sistema_usuario'] = $this->acceso_sistema_usuario_model->get_accesos_sistema_usuario($id_usuario);
-            $data['opciones_sistema_otorgables'] = $this->opcion_sistema_model->get_opciones_sistema_otorgables();
-
-            return view('templates/header', $data)
-                .view('catalogos/usuario/detalle', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header')
+            .view('catalogos/usuario/detalle', $data)
+            .view('templates/footer');
     }
 
     public function nuevo()
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
+        $data['roles'] = $this->rol_model->get_roles();
 
-            $data['roles'] = $this->rol_model->get_roles();
-
-            return view('templates/header', $data)
-                .view('catalogos/usuario/nuevo', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header')
+            .view('catalogos/usuario/nuevo', $data)
+            .view('templates/footer');
     }
 
     public function guardar()
     {
-        if ($this->session->logueado) {
-            $usuario = $this->request->getPost();
-            if ($usuario) {
-                $data = [];
-                if (array_key_exists('id_usuario', $usuario)) {
-                    $data += array(
-                        'id_usuario' => $usuario['id_usuario'],
-                    );
-                }
+        $usuario = $this->request->getPost();
+        if ($usuario) {
+            $data = [];
+            if (array_key_exists('id_usuario', $usuario)) {
                 $data += array(
-                    'id_rol' => $usuario['id_rol'],
-                    'nom_usuario' => $usuario['nom_usuario'],
-                    'nom_login' => $usuario['nom_login'],
-                    'password' => $usuario['password'],
-                    'activo' => array_key_exists('activo', $usuario) ? 1 : 0,
+                    'id_usuario' => $usuario['id_usuario'],
                 );
-                // guardar
-                $this->usuario_model->save($data);
-
-                if (array_key_exists('id_usuario', $usuario)) {
-                    $accion = 'modificó';
-                    $id_usuario = $usuario['id_usuario'];
-                } else {
-                    $accion = 'agregó';
-                    $id_usuario = $this->usuario_model->getInsertID();
-                }
-
-                // registro en bitacora
-                $entidad = 'usuario';
-                $valor = $id_usuario . " " .$usuario['nom_login'];
-                $this->fn_sis->registro_bitacora($accion, $entidad, $valor);
             }
-            return redirect()->to(site_url("usuario"));
-        } else {
-            return redirect()->to(site_url("login"));
+            $data += array(
+                'id_rol' => $usuario['id_rol'],
+                'nom_usuario' => $usuario['nom_usuario'],
+                'nom_login' => $usuario['nom_login'],
+                'password' => $usuario['password'],
+                'activo' => array_key_exists('activo', $usuario) ? 1 : 0,
+            );
+            // guardar
+            $this->usuario_model->save($data);
+
+            if (array_key_exists('id_usuario', $usuario)) {
+                $accion = 'modificó';
+                $id_usuario = $usuario['id_usuario'];
+            } else {
+                $accion = 'agregó';
+                $id_usuario = $this->usuario_model->getInsertID();
+            }
+
+            // registro en bitacora
+            $entidad = 'usuario';
+            $valor = $id_usuario . " " .$usuario['nom_login'];
+            $this->fn_sis->registro_bitacora($accion, $entidad, $valor);
         }
+        return redirect()->to(site_url("usuario"));
     }
 
     public function guardar_activo()
     {
-        if ($this->session->logueado) {
-            $usuario = $this->request->getPost();
-            if ($usuario) {
-                $accion = 'modificó';
-                $activo = array_key_exists('activo', $usuario) ? 'activo' : 'inactivo';
+        $usuario = $this->request->getPost();
+        if ($usuario) {
+            $accion = 'modificó';
+            $activo = array_key_exists('activo', $usuario) ? 'activo' : 'inactivo';
 
-                // guardado
-                $data = array(
-                    'id_usuario' => $usuario['id_usuario'],
-                    'activo' => array_key_exists('activo', $usuario) ? 1 : 0,
-                );
-                $this->usuario_model->save($data);
+            // guardado
+            $data = array(
+                'id_usuario' => $usuario['id_usuario'],
+                'activo' => array_key_exists('activo', $usuario) ? 1 : 0,
+            );
+            $this->usuario_model->save($data);
 
-                // registro en bitacora
-                $entidad = 'usuario';
-                $valor = $usuario['id_usuario'] . " " .$usuario['nom_login'] . " " . $activo;
-                $this->fn_sis->registro_bitacora($accion, $entidad, $valor);
-            }
-            return redirect()->to(site_url("usuario"));
-        } else {
-            return redirect()->to(site_url("login"));
+            // registro en bitacora
+            $entidad = 'usuario';
+            $valor = $usuario['id_usuario'] . " " .$usuario['nom_login'] . " " . $activo;
+            $this->fn_sis->registro_bitacora($accion, $entidad, $valor);
         }
+        return redirect()->to(site_url("usuario"));
     }
 
-    public function eliminar($id_usuario)
+    public function eliminar()
     {
-        if ($this->session->logueado) {
+        $usuario = $this->request->getPost();
+        if ($usuario) {
+            $id_usuario = $usuario['id_usuario'];
+            $url_actual = $usuario['url_actual'];
 
             // registro en bitacora
             $usuario = $this->usuario_model->get_usuario($id_usuario);
@@ -145,11 +119,10 @@ class Usuario extends BaseController
             // eliminado
             $this->usuario_model->delete($id_usuario);
 
-            return redirect()->to(site_url("usuario"));
+            return redirect()->to($url_actual);
         } else {
-            return redirect()->to(site_url("login"));
+            return redirect()->to(site_url("usuario"));
         }
     }
 
 }
-

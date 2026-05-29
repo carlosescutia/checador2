@@ -32,6 +32,10 @@
             display: none;
         }
 
+        .secondary.pointing.menu .visible {
+            display: block;
+        }
+
         @media only screen and (max-width: 700px) {
             .secondary.pointing.menu .item,
             .secondary.pointing.menu .menu {
@@ -58,44 +62,53 @@
 <body>
 
 <!-- Sidebar Menu -->
-<div class="ui inverted left vertical sidebar menu">
+<div class="ui left vertical sidebar massive menu">
     <a class="item" href="<?=site_url()?>">
       <i class="home icon"></i>
       Inicio
     </a>
     <?php
+        $session = service('session');
+        $userdata = $session->get();
+        $id_usuario = $userdata['id_usuario'];
+
+        $acceso_sistema_model = model('Acceso_sistema_model');
+        $permisos_usuario = explode(',', $acceso_sistema_model->get_permisos_usuario($id_usuario));
+    ?>
+
+    <?php
         $permisos_requeridos = array(
             'proceso.can_view',
         );
-        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-            <a class="item" href="<?=site_url('proceso')?>">
-            <i class="block layout icon"></i>
-            Proceso
-            </a>
-        <?php }
     ?>
+    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+            <a class="item" href="<?=site_url('proceso')?>">
+                <i class="block layout icon"></i>
+                Proceso
+            </a>
+    <?php endif ?>
     <?php
         $permisos_requeridos = array(
             'reporte.can_view',
         );
-        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-            <a class="item" href="<?=site_url('reportes')?>">
+    ?>
+    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+        <a class="item" href="<?=site_url('reportes')?>">
             <i class="file alternate icon"></i>
             Reportes
-            </a>
-        <?php }
-    ?>
+        </a>
+    <?php endif ?>
     <?php
         $permisos_requeridos = array(
             'catalogo.can_view',
         );
-        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-            <a class="item" href="<?=site_url('catalogos')?>">
+    ?>
+    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+        <a class="item" href="<?=site_url('catalogos')?>">
             <i class="wrench icon"></i>
             Catálogos
-            </a>
-        <?php }
-    ?>
+        </a>
+    <?php endif ?>
     <a class="item">
       <i class="user icon"></i>
       <?= $userdata['nom_usuario'] ?>
@@ -109,40 +122,75 @@
 <!-- Page Contents -->
 <div class="pusher">
 <div class="ui vertical center aligned segment">
+    <?php
+        $nombre_archivo = 'logo.png';
+        $up_dir = 'assets/img/';
+        $nombre_archivo_fs = $up_dir . $nombre_archivo;
+        $nombre_archivo_url = base_url($up_dir . $nombre_archivo);
+    ?>
 
-    <div class="ui container barra">
+    <div class="ui container barra no-print">
         <div class="ui large secondary pointing menu">
             <a class="toc item">
                 <i class="sidebar icon"></i>
             </a>
-            <h3 class="ui header toc item">PHPapp4</h3>
+            <div class="header item">
+                PHPapp4
+            </div>
+            <div class="ui toc item"><h3>PHPapp4</h3></div>
+            <div class="ui toc item">
+                <div class="ui horizontal list">
+                    <div class="item">
+                        <?php if ( file_exists($nombre_archivo_fs) and $nombre_archivo_fs !== $up_dir ): ?>
+                            <img class="ui bordered image" src="<?= $nombre_archivo_url ?>" style="height:30px; width:30px">
+                        <?php else: ?>
+                            <img class="ui bordered image" src="<?= base_url('assets/img/image.png') ?>" style="height:30px; width:30px">
+                        <?php endif ?>
+                        <div class="content">
+                            <?=$userdata['nom_usuario'] ? $userdata['nom_usuario'] : $userdata['nom_usuario']?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <a class="item" href="<?=site_url()?>">Inicio</a>
             <?php
                 $permisos_requeridos = array(
                     'proceso.can_view',
                 );
-                if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                    <a class="item" href="<?=site_url('proceso')?>">Proceso</a>
-                <?php }
             ?>
+            <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                <a class="item" href="<?=site_url('proceso')?>">Proceso</a>
+            <?php endif ?>
             <?php
                 $permisos_requeridos = array(
                     'reporte.can_view',
                 );
-                if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                    <a class="item" href="<?=site_url('reportes')?>">Reportes</a>
-                <?php }
             ?>
+            <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                <a class="item" href="<?=site_url('reportes')?>">Reportes</a>
+            <?php endif ?>
             <?php
                 $permisos_requeridos = array(
                     'catalogo.can_view',
                 );
-                if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                    <a class="item" href="<?=site_url('catalogos')?>">Catálogos</a>
-                <?php }
             ?>
+            <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                <a class="item" href="<?=site_url('catalogos')?>">Catálogos</a>
+            <?php endif ?>
             <div class="right menu">
-                <a class="item usuario-menu" href="#"><i class="circular user icon"></i><?=$userdata['nom_usuario']?></a>
+                <div class="item" style="height: 40px;">
+                    <a href="#">
+                        <?php if ( file_exists($nombre_archivo_fs) and $nombre_archivo_fs !== $up_dir ): ?>
+                            <img class="ui bordered image" src="<?= $nombre_archivo_url ?>" style="height:30px; width:30px">
+                        <?php else: ?>
+                            <img class="ui bordered image" src="<?= base_url('assets/img/image.png') ?>" style="height:30px; width:30px">
+                        <?php endif ?>
+                    </a>
+                    <span>
+                        <a class="item usuario-menu" href="#"><?=$userdata['nom_usuario'] ? $userdata['nom_usuario'] : $userdata['nom_usuario']?></a>
+                    </span>
+                </div>
                 <a class="item" href="<?=site_url('logout')?>">Salir</a>
             </div>
         </div>

@@ -1,37 +1,15 @@
-function confirm_delete(item, action) {
+function confirm_action(mensaje, forma) {
     $.modal({
-        title: 'Confirme que desea eliminar',
+        title: 'Confirme la acción',
         class: 'tiny',
         closeIcon: false,
-        content: item,
+        content: mensaje,
         actions: [
             {
-                text: 'Eliminar',
-                class: 'red',
+                text: 'Confirmar',
+                class: 'orange',
                 click: function () {
-                    window.location.replace(action);
-                }
-            },
-            {
-                text: 'Cancelar',
-                class: 'black'
-            },
-        ],
-    }).modal('show');
-}
-
-function confirm_file_delete(item, frm_eliminar) {
-    $.modal({
-        title: 'Confirme que desea eliminar',
-        class: 'tiny',
-        closeIcon: false,
-        content: item,
-        actions: [
-            {
-                text: 'Eliminar',
-                class: 'red',
-                click: function () {
-                    $(frm_eliminar).submit();
+                    $(forma).submit();
                 }
             },
             {

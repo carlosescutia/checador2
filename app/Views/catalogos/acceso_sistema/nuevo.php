@@ -2,15 +2,11 @@
     <div class="ui stackable grid">
         <div class="row">
             <div class="twelve wide column">
-                <div class="ui grid">
-                    <div class="row">
-                        <div class="eight wide column">
-                            <h1 class="ui header">Agregar acceso sistema</h1>
-                        </div>
-                        <div class="eight wide right aligned column">
-                            <button class="ui primary button" type="submit" form="frm_acceso_sistema">Guardar</button>
-                        </div>
-                    </div>
+                <div class="row">
+                    <h1 class="ui header">
+                        Agregar acceso sistema
+                        <button class="ui right floated primary button" type="submit" form="frm_acceso_sistema">Guardar</button>
+                    </h1>
                 </div>
 
                 <div class="ui basic segment">

@@ -2,17 +2,11 @@
     <div class="ui stackable grid">
         <div class="row">
             <div class="twelve wide column">
-                <div class="ui grid">
-                    <div class="row">
-                        <div class="eight wide column">
-                            <h1 class="ui header">Accesos sistema</h1>
-                        </div>
-                        <div class="eight wide right aligned column">
-                            <form class="ui form" method="post" action="/acceso_sistema/nuevo">
-                                <button class="ui primary button">Agregar</button>
-                            </form>
-                        </div>
-                    </div>
+                <div class="row">
+                    <h1 class="ui header">
+                        Accesos sistema
+                        <a class="ui right floated primary button" href="<?= site_url('acceso_sistema/nuevo') ?>">Agregar</a>
+                    </h1>
                 </div>
 
                 <table id="tbl_accesos" class="ui very basic striped unstackable table">
@@ -43,11 +37,15 @@
                                 </h4>
                             </td>
                             <td>
-                                <?php
-                                    $item_eliminar = 'Acceso: ' . $accesos_sistema_item['id_rol'] . ' ' . $accesos_sistema_item['cod_opcion_sistema'] ;
-                                    $action = site_url("acceso_sistema/eliminar/") . $accesos_sistema_item['id_acceso_sistema'];
-                                ?>
-                                <a href="#" onclick="confirm_delete('<?=$item_eliminar?>','<?=$action?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                                <form class="ui form" method="post" action="/acceso_sistema/eliminar" id="frm_elim_acceso_sistema<?=$accesos_sistema_item['id_acceso_sistema']?>">
+                                    <input type="hidden" name="id_acceso_sistema" id="id_acceso_sistema" value="<?= $accesos_sistema_item['id_acceso_sistema'] ?>" >
+                                    <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('acceso_sistema') ?>">
+                                    <?php
+                                        $mensaje = 'Se eliminará el Acceso: <strong>' . $accesos_sistema_item['id_rol'] . ' ' . $accesos_sistema_item['cod_opcion_sistema'] . '</strong>.<br>¿Está seguro?' ;
+                                        $forma = '#frm_elim_acceso_sistema' . $accesos_sistema_item['id_acceso_sistema'] ;
+                                    ?>
+                                    <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach ?>

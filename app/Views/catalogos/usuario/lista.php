@@ -2,17 +2,11 @@
     <div class="ui stackable grid">
         <div class="row">
             <div class="twelve wide column">
-                <div class="ui grid">
-                    <div class="row">
-                        <div class="eight wide column">
-                            <h1 class="ui header">Usuarios</h1>
-                        </div>
-                        <div class="eight wide right aligned column">
-                            <form class="ui form" method="post" action="/usuario/nuevo">
-                                <button class="ui primary button">Agregar</button>
-                            </form>
-                        </div>
-                    </div>
+                <div class="row">
+                    <h1 class="ui header">
+                        Usuarios
+                        <a class="ui right floated primary button" href="<?= site_url('usuario/nuevo') ?>">Agregar</a>
+                    </h1>
                 </div>
 
                 <table class="ui very basic striped unstackable table">
@@ -47,11 +41,15 @@
                                 </form>
                             </td>
                             <td>
-                                <?php
-                                    $item_eliminar = 'Usuario ' . $usuarios_item['nom_usuario'] ;
-                                    $action = base_url("usuario/eliminar/") . $usuarios_item['id_usuario'];
-                                ?>
-                                <a href="#" onclick="confirm_delete('<?=$item_eliminar?>','<?=$action?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                                <form class="ui form" method="post" action="/usuario/eliminar" id="frm_elim_usuario<?=$usuarios_item['id_usuario']?>">
+                                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?= $usuarios_item['id_usuario'] ?>" >
+                                    <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('usuario') ?>">
+                                    <?php
+                                        $mensaje = 'Se eliminará el usuario <strong>' . $usuarios_item['nom_usuario'] . '</strong>.<br>¿Está seguro?' ;
+                                        $forma = '#frm_elim_usuario' . $usuarios_item['id_usuario'] ;
+                                    ?>
+                                    <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach ?>

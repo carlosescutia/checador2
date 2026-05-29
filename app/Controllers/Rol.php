@@ -11,18 +11,11 @@ class Rol extends BaseController
 
     public function index()
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
+        $data['roles'] = $this->rol_model->get_roles();
 
-            $data['roles'] = $this->rol_model->get_roles();
-
-            return view('templates/header', $data)
-                .view('catalogos/rol/lista', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header', $data)
+            .view('catalogos/rol/lista', $data)
+            .view('templates/footer');
     }
 
 }

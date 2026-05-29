@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <link rel="icon" href="<?=base_url('favicon.png')?>"/>
 
+        <title>PHP App 4</title>
+
         <!-- semantic-ui -->
         <script src="<?=base_url('assets/js/jquery.min.js')?>"></script>
         <link href="<?=base_url('assets/css/semantic.min.css')?>" rel="stylesheet"/>
@@ -24,12 +26,15 @@
             <div class="row">
                 <div class="six wide column">
                     <div class="ui basic segment">
-                        <h1 class="ui header">Sistema de Evaluación de Guanajuato</h1>
+                        <h1 class="ui header">PHP App 4</h1>
                         <div class="ui divider"></div>
 
                         <?php if ($error): ?>
-                            <div class="ui negative message">
-                                <p><?php echo $error ?></p>
+                            <div class="ui negative message transition">
+                                <div class="header">
+                                    Error
+                                </div>
+                                <p><?= $error ?></p>
                             </div>
                         <?php endif ?>
 
@@ -58,3 +63,17 @@
         </div>
     </body>
 </html>
+<script>
+    $(document).ready( function() {
+        $('#nom_login').focus();
+    });
+
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade')
+            ;
+        })
+    ;
+</script>

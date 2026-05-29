@@ -133,7 +133,7 @@
 
     $('#btn_eliminar').click( function() {
         if ('<?= $borrado ?>' == 'habilitado') {
-            confirm_file_delete('<?=$nombre_archivo?>', '#frm_eliminar');
+            confirm_action('Se eliminará <?=$nombre_archivo?> ¿está seguro?', '#frm_eliminar');
         }
     });
 
@@ -144,7 +144,7 @@
 
     $('#btn_eliminar_doc1').click( function() {
         if ('<?= $borrado_doc1 ?>' == 'habilitado') {
-            confirm_file_delete('<?=$nombre_archivo_doc1?>', '#frm_eliminar_doc1');
+            confirm_action('Se eliminará <?=$nombre_archivo_doc1?> ¿está seguro?', '#frm_eliminar_doc1');
         }
     });
 
