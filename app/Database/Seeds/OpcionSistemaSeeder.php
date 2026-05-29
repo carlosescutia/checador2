@@ -64,6 +64,21 @@ class OpcionSistemaSeeder extends Seeder
                 'nom_opcion_sistema' => 'Ver roles',
                 'otorgable' => null
             ],
+            [
+                'cod_opcion_sistema' => 'recurso.can_edit',
+                'nom_opcion_sistema' => 'Editar recursos',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'archivo.can_upload',
+                'nom_opcion_sistema' => 'Subir archivos',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'archivo.can_delete',
+                'nom_opcion_sistema' => 'Eliminar archivos',
+                'otorgable' => null
+            ],
         ];
 
         $this->db->table('opcion_sistema')->insertBatch($data);

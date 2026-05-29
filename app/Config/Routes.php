@@ -51,6 +51,14 @@ $routes->post('acceso_sistema_usuario/eliminar', 'Acceso_sistema_usuario::elimin
 
 $routes->post('archivo/subir', 'Archivo::subir', ['filter' => ['auth', 'perms_and:archivo.can_upload']] );
 $routes->post('archivo/eliminar', 'Archivo::eliminar', ['filter' => ['auth', 'perms_and:archivo.can_delete']] );
+$routes->post('archivo/subir_recurso', 'Archivo::subir_recurso', ['filter' => ['auth', 'perms_and:recurso.can_edit,archivo.can_upload']] );
+$routes->post('archivo/eliminar_recurso', 'Archivo::eliminar_recurso', ['filter' => ['auth', 'perms_and:recurso.can_edit,archivo.can_delete']] );
+
+$routes->get('recurso/', 'Recurso::index');
+$routes->get('recurso/detalle/(:num)', 'Recurso::detalle/$1');
+$routes->get('recurso/nuevo', 'Recurso::nuevo');
+$routes->post('recurso/guardar', 'Recurso::guardar');
+$routes->post('recurso/eliminar', 'Recurso::eliminar');
 
 $routes->get('proceso/', 'Proceso::index');
 

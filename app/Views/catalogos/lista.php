@@ -8,11 +8,11 @@
                     <div class="ui stackable grid container">
                         <?php
                             $permisos_requeridos = array(
-                            'usuario.can_edit',
+                            'recurso.can_edit',
                             );
                             if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
                                 <div class="four wide column">
-                                    <?php include "usuario/boton.php" ?>
+                                    <?php include "recurso/boton.php" ?>
                                 </div>
                             <?php }
                         ?>
