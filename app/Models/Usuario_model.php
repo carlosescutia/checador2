@@ -15,9 +15,10 @@ class Usuario_model extends Model
         'nom_login',
         'password',
         'activo',
+        'token_cambio_pwd',
     ];
 
-    public function get_usuarios()
+    public function get_usuarios_todos()
     {
         $sql = ""
             ."select "
@@ -44,7 +45,7 @@ class Usuario_model extends Model
         return $query->getRowArray();
     }
 
-    public function get_usuario_credenciales($nom_login, $password)
+    public function get_usuario_login($nom_login)
     {
         $sql = ''
             .'select '
@@ -55,11 +56,31 @@ class Usuario_model extends Model
             .'left join rol r on u.id_rol = r.id_rol '
             .'where '
             .'u.nom_login = ? '
-            .'and u.password = ? '
             .'and u.activo = 1 '
             .'';
-        $query = $this->db->query($sql, array($nom_login, $password));
+        $query = $this->db->query($sql, array($nom_login));
         return $query->getRowArray();
+    }
+
+    public function get_usuario_token_cambio_pwd($token)
+    {
+        $sql = ''
+            .'select '
+            .'u.* '
+            .'from '
+            .'usuario u '
+            .'where '
+            .'u.token_cambio_pwd = ? '
+            .'';
+        $query = $this->db->query($sql, array($token));
+        return $query->getRowArray();
+    }
+
+    public function get_existe($nom_login)
+    {
+        $sql = 'select 1 as existe from usuario where nom_login = ? ';
+        $query = $this->db->query($sql, array($nom_login));
+        return $query->getRowArray()['existe'] ?? null ;
     }
 
 }

@@ -19,6 +19,13 @@ $routes->post('usuario/guardar', 'Usuario::guardar', ['filter' => ['auth', 'perm
 $routes->post('usuario/guardar_activo', 'Usuario::guardar_activo', ['filter' => ['auth', 'perms_and:usuario.can_edit']] );
 $routes->post('usuario/eliminar', 'Usuario::eliminar', ['filter' => ['auth', 'perms_and:usuario.can_edit']] );
 
+$routes->post('usuario/generar_token_cambio_pwd', 'Usuario::generar_token_cambio_pwd', ['filter' => ['auth', 'perms_and:usuario.can_edit']] );
+$routes->post('usuario/eliminar_token_cambio_pwd', 'Usuario::eliminar_token_cambio_pwd', ['filter' => ['auth', 'perms_and:usuario.can_edit']] );
+$routes->get('usuario/nuevo_pwd/(:segment)', 'Usuario::nuevo_pwd/$1');
+$routes->post('usuario/actualizar_password', 'Usuario::actualizar_password', ['filter' => ['auth', 'perms_and:usuario.can_edit']] );
+$routes->get('usuario/existe/(:segment)', 'Usuario::existe/$1');
+
+
 $routes->get('rol/', 'Rol::index', ['filter' => ['auth', 'perms_and:rol.can_view']] );
 
 $routes->get('opcion_sistema/', 'Opcion_sistema::index', ['filter' => ['auth', 'perms_and:opcion_sistema.can_edit']] );

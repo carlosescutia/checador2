@@ -63,27 +63,32 @@ class Admin extends BaseController
         if ($this->request->getPost()) {
             $nom_login = $this->request->getPost('nom_login');
             $password = $this->request->getPost('password');
-            $usuario = $this->usuario_model->get_usuario_credenciales($nom_login, $password);
+            $usuario = $this->usuario_model->get_usuario_login($nom_login);
             if ($usuario) {
-                $userdata = array(
-                    'id_usuario' => $usuario['id_usuario'],
-                    'id_rol' => $usuario['id_rol'],
-                    'nom_usuario' => $usuario['nom_usuario'],
-                    'nom_login' => $usuario['nom_login'],
-                    'logueado' => TRUE,
-                );
-                $this->session->set($userdata);
+                if ( password_verify($password, $usuario['password']) ) {
+                    $userdata = array(
+                        'id_usuario' => $usuario['id_usuario'],
+                        'id_rol' => $usuario['id_rol'],
+                        'nom_usuario' => $usuario['nom_usuario'],
+                        'nom_login' => $usuario['nom_login'],
+                        'logueado' => TRUE,
+                    );
+                    $this->session->set($userdata);
 
-                // registro en bitacora
-                $accion = 'login';
-                $entidad = '';
-                $valor = '';
-                $this->fn_sis->registro_bitacora($accion, $entidad, $valor);
+                    // registro en bitacora
+                    $accion = 'login';
+                    $entidad = '';
+                    $valor = '';
+                    $this->fn_sis->registro_bitacora($accion, $entidad, $valor);
 
-                return redirect()->to(site_url());
+                    return redirect()->to(site_url());
+                } else {
+                    $this->session->setFlashdata('error', 'Usuario o contraseña incorrectos');
+                    return redirect()->to(site_url('login'));
+                }
             } else {
                 $this->session->setFlashdata('error', 'Usuario o contraseña incorrectos');
-                return redirect()->to(site_url("login"));
+                return redirect()->to(site_url('login'));
             }
         }
     }

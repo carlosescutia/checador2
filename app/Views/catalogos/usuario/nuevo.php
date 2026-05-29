@@ -25,6 +25,7 @@
                                 <input type="text" name="password" id="password">
                             </div>
                         </div>
+                        <input type="hidden" id="nom_existente" value="inexistente">
                         <div class="fields">
                             <div class="four wide field">
                                 <label>Rol</label>
@@ -63,6 +64,16 @@
 </div>
 
 <script>
+    $('#nom_login').change ( function () {
+        nom_login = $('#nom_login').val();
+        test_url = "<?= site_url('usuario/existe/') ?>" + nom_login ;
+        $.get(test_url, function(data, status) {
+            if (data) {
+                $('#nom_existente').val(nom_login);
+            }
+        });
+    });
+
 $('.ui.form')
     .form({
         fields: {
@@ -76,12 +87,15 @@ $('.ui.form')
                 ]
             },
             nom_login: {
-                identifier: 'nom_login',
                 rules: [
                     {
                         type   : 'notEmpty',
                         prompt : 'Login no puede estar vacio'
-                    }
+                    },
+                    {
+                        type   : 'different[nom_existente]',
+                        prompt : 'Ya existe el nombre de usuario, selecciona otro'
+                    },
                 ]
             },
             password: {
