@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="<?=base_url('favicon.png')?>"/>
 
-    <title>phpapp4</title>
+    <title>Checador2</title>
 
     <link href="<?=base_url('assets/css/phpapp4.css')?>" rel="stylesheet"/>
 
@@ -135,9 +135,9 @@
                 <i class="sidebar icon"></i>
             </a>
             <div class="header item">
-                PHPapp4
+                Checador2
             </div>
-            <div class="ui toc item"><h3>PHPapp4</h3></div>
+            <div class="ui toc item"><h3>Checador2</h3></div>
             <div class="ui toc item">
                 <div class="ui horizontal list">
                     <div class="item">

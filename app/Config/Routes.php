@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Admin::index');
+$routes->get('/', 'Admin::index', ['filter' => ['auth',]] );
 $routes->get('login', 'Admin::login');
 $routes->post('post_login', 'Admin::post_login');
 $routes->get('logout', 'Admin::logout');
@@ -54,11 +54,11 @@ $routes->post('archivo/eliminar', 'Archivo::eliminar', ['filter' => ['auth', 'pe
 $routes->post('archivo/subir_recurso', 'Archivo::subir_recurso', ['filter' => ['auth', 'perms_and:recurso.can_edit,archivo.can_upload']] );
 $routes->post('archivo/eliminar_recurso', 'Archivo::eliminar_recurso', ['filter' => ['auth', 'perms_and:recurso.can_edit,archivo.can_delete']] );
 
-$routes->get('recurso/', 'Recurso::index');
-$routes->get('recurso/detalle/(:num)', 'Recurso::detalle/$1');
-$routes->get('recurso/nuevo', 'Recurso::nuevo');
-$routes->post('recurso/guardar', 'Recurso::guardar');
-$routes->post('recurso/eliminar', 'Recurso::eliminar');
+$routes->get('recurso/', 'Recurso::index', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
+$routes->get('recurso/detalle/(:num)', 'Recurso::detalle/$1', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
+$routes->get('recurso/nuevo', 'Recurso::nuevo', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
+$routes->post('recurso/guardar', 'Recurso::guardar', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
+$routes->post('recurso/eliminar', 'Recurso::eliminar', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
 
 $routes->get('proceso/', 'Proceso::index');
 

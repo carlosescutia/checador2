@@ -11,17 +11,13 @@ class Reportes extends BaseController
 
     public function index()
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
-            $data['error'] = $this->session->getFlashdata('error');
+        $data = [];
+        $data += $this->fn_sis->get_userdata();
+        $data['error'] = $this->session->getFlashdata('error');
 
-            return view('templates/header', $data)
-                .view('reportes/index', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header')
+            .view('reportes/index', $data)
+            .view('templates/footer');
     }
 
     public function bitacora($salida='')
@@ -35,7 +31,7 @@ class Reportes extends BaseController
         if ($salida == 'csv') {
             return $this->response->download("bitacora_" . $data['userdata']['nom_login'] . '.csv', $data['bitacora']);
         } else {
-            return view('templates/header', $data)
+            return view('templates/header')
                 .view('reportes/bitacora', $data)
                 .view('templates/footer');
         }

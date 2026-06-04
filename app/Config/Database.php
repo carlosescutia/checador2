@@ -51,6 +51,33 @@ class Database extends Config
         ],
     ];
 
+    /**
+     * Sample database connection for Postgre.
+     *
+     * @var array<string, mixed>
+     */
+    public array $old = [
+        'DSN'        => '',
+        'hostname'   => 'localhost',
+        'username'   => 'root',
+        'password'   => 'root',
+        'database'   => 'ci4',
+        'schema'     => 'public',
+        'DBDriver'   => 'Postgre',
+        'DBPrefix'   => '',
+        'pConnect'   => false,
+        'DBDebug'    => true,
+        'charset'    => 'utf8',
+        'swapPre'    => '',
+        'failover'   => [],
+        'port'       => 5432,
+        'dateFormat' => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+    ];
+
     //    /**
     //     * Sample database connection for SQLite3.
     //     *

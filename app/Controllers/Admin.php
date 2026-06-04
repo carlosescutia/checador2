@@ -13,27 +13,9 @@ class Admin extends BaseController
 
     public function index()
     {
-        if ($this->session->logueado) {
-            $data = [];
-            $data += $this->fn_sis->get_userdata();
-
-            $permisos_requeridos = array(
-                'reporte_mentor.can_view',
-            );
-            if (has_permission_or($permisos_requeridos, $data['permisos_usuario'])) {
-                $acceso = 'Puede ver reportes de mentor';
-            } else {
-                $acceso = 'NO Puede ver reportes de mentor';
-            }
-
-            $data['acceso'] = $acceso;
-
-            return view('templates/header', $data)
-                .view('admin/index', $data)
-                .view('templates/footer');
-        } else {
-            return redirect()->to(site_url("login"));
-        }
+        return view('templates/header')
+            .view('admin/index', $data)
+            .view('templates/footer');
     }
 
     public function login()
