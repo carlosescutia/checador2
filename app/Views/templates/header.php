@@ -154,6 +154,8 @@
             </div>
 
             <a class="item" href="<?=site_url()?>">Inicio</a>
+            <a class="item" href="<?=site_url('incidentes')?>">Incidentes</a>
+            <a class="item" href="<?=site_url('importar')?>">Importar</a>
             <?php
                 $permisos_requeridos = array(
                     'proceso.can_view',

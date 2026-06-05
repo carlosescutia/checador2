@@ -14,7 +14,7 @@ class Admin extends BaseController
     public function index()
     {
         return view('templates/header')
-            .view('admin/index', $data)
+            .view('admin/index')
             .view('templates/footer');
     }
 

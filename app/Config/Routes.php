@@ -65,3 +65,9 @@ $routes->get('proceso/', 'Proceso::index');
 $routes->get('reportes/', 'Reportes::index', ['filter' => ['auth', 'perms_and:reporte.can_view']] );
 $routes->get('reportes/bitacora', 'Reportes::bitacora', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
 $routes->get('reportes/bitacora/(:segment)', 'Reportes::bitacora/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+
+
+$routes->get('incidentes/', 'Incidentes::index', ['filter' => ['auth']] );
+$routes->post('incidentes/', 'Incidentes::index', ['filter' => ['auth']] );
+$routes->get('incidentes/empleado/(:num)', 'Incidentes::empleado/$1', ['filter' => ['auth']] );
+$routes->post('incidentes/empleado/(:num)', 'Incidentes::empleado/$1', ['filter' => ['auth']] );

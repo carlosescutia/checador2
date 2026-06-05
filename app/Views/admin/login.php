@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <link rel="icon" href="<?=base_url('favicon.png')?>"/>
 
-        <title>PHP App 4</title>
+        <title>Checador2</title>
 
         <!-- semantic-ui -->
         <script src="<?=base_url('assets/js/jquery.min.js')?>"></script>
@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="six wide column">
                     <div class="ui basic segment">
-                        <h1 class="ui header">PHP App 4</h1>
+                        <h1 class="ui header">Checador2</h1>
                         <div class="ui divider"></div>
 
                         <?php if ($error): ?>
@@ -38,7 +38,7 @@
                             </div>
                         <?php endif ?>
 
-                        <img class="ui centered tiny image" src="/assets/img/logotipo.png">
+                        <img class="ui centered medium image" src="/assets/img/logotipo.png">
 
                         <h2 class="ui header">Inicie sesión</h2>
 
@@ -46,7 +46,7 @@
                             <div class="field">
                                 <div class="ui left icon input">
                                     <i class="user icon"></i>
-                                    <input type="text" name="nom_login" placeholder="Usuario">
+                                    <input type="text" name="nom_login" id="nom_login" placeholder="Usuario">
                                 </div>
                             </div>
                             <div class="field">
