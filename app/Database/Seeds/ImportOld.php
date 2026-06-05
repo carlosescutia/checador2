@@ -25,6 +25,9 @@ class ImportOld extends Seeder
         seeding de nuevos catalogos
         ------------------
         */
+        $this->db->query('truncate tipo_incidente restart identity');
+        $this->call('TipoIncidenteSeeder');
+
         $this->db->query('truncate tipo_justificante restart identity');
         $this->call('TipoJustificanteSeeder');
 
@@ -69,11 +72,6 @@ class ImportOld extends Seeder
             select id_horario_especial, cve_dia, cve_horario from old.horarios_especiales_dias');
         $this->db->query("select setval(pg_get_serial_sequence('horario_especial_dia', 'id_horario_especial_dia'), (select max(id_horario_especial_dia) from horario_especial_dia))");
 
-        $this->db->query('truncate tipo_incidente restart identity');
-        $this->db->query('insert into tipo_incidente (id_tipo_incidente, cve_tipo_incidente, nom_tipo_incidente)
-            select cve_incidente, nom_incidente, desc_incidente from old.tipo_incidentes');
-        $this->db->query("select setval(pg_get_serial_sequence('tipo_incidente', 'id_tipo_incidente'), (select max(id_tipo_incidente) from tipo_incidente))");
-
         /* registros */
         $this->db->query('truncate asistencia restart identity');
         $this->db->query('insert into asistencia (id_asistencia, id_empleado, fecha, hora)
@@ -87,7 +85,7 @@ class ImportOld extends Seeder
         $this->db->query("update justificante set tipo_cobertura = (case tipo_cobertura when 'E' then 'entrada' when 'S' then 'salida' when 'D' then 'dia' when 'V' then 'vacaciones' end) ");
 
         $this->db->query('truncate justificante_periodo restart identity');
-        $this->db->query('insert into justificante_periodo (id_justificante_periodo, id_justificante, id_periodo, anio)
+        $this->db->query('insert into justificante_periodo (id_justificante_periodo, id_justificante, id_periodo_vacacional, anio)
             select id_justificante_periodo, cve_justificante, id_periodo, anio from old.justificante_periodo');
         $this->db->query("select setval(pg_get_serial_sequence('justificante_periodo', 'id_justificante_periodo'), (select max(id_justificante_periodo) from justificante_periodo))");
 
@@ -103,7 +101,7 @@ class ImportOld extends Seeder
         $this->db->query("select setval(pg_get_serial_sequence('justificante_masivo_empleado', 'id_justificante_masivo_empleado'), (select max(id_justificante_masivo_empleado) from justificante_masivo_empleado))");
 
         $this->db->query('truncate justificante_masivo_periodo restart identity');
-        $this->db->query('insert into justificante_masivo_periodo (id_justificante_masivo_periodo, id_justificante_masivo, id_periodo, anio)
+        $this->db->query('insert into justificante_masivo_periodo (id_justificante_masivo_periodo, id_justificante_masivo, id_periodo_vacacional, anio)
             select id_justificante_masivo_periodo, cve_justificante_masivo, id_periodo, anio from old.justificante_masivo_periodo');
         $this->db->query("select setval(pg_get_serial_sequence('justificante_masivo_periodo', 'id_justificante_masivo_periodo'), (select max(id_justificante_masivo_periodo) from justificante_masivo_periodo))");
 

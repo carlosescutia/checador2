@@ -19,7 +19,7 @@ class JustificanteMasivoPeriodo extends Migration
                 'type' => 'int',
                 'null' => true,
             ],
-            'id_periodo' => [
+            'id_periodo_vacacional' => [
                 'type' => 'int',
                 'null' => true,
             ],
