@@ -9,6 +9,8 @@ class Incidentes extends BaseController
         $this->incidente_model = model('Incidente_model');
         $this->empleado_model = model('Empleado_model');
         $this->asistencia_model = model('Asistencia_model');
+        $this->dia_inhabil_model = model('Dia_inhabil_model');
+        $this->justificante_masivo_model = model('Justificante_masivo_model');
     }
 
     public function index()
@@ -26,7 +28,7 @@ class Incidentes extends BaseController
             if ( $this->session->mes ) {
                 $mes = $this->session->mes;
             } else {
-                $mes = date('m');
+                $mes = date('n');
             }
             if ( $this->session->anio ) {
                 $anio = $this->session->anio;
@@ -38,9 +40,11 @@ class Incidentes extends BaseController
         $data['anio'] = $anio;
         $tolerancia_retardo = '0:15';
         $tolerancia_asistencia = '0:30';
+        $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
         $data['url_actual'] = site_url('incidentes');
         $data['incidentes_empleados'] = $this->incidente_model->get_lista_incidentes_empleados_todos($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia);
-        $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
+        $data['dias_inhabiles'] = $this->dia_inhabil_model->get_dias_inhabiles($anio);
+        $data['justificantes_masivos'] = $this->justificante_masivo_model->get_justificantes_masivos($mes, $anio);
 
         return view('templates/header')
             .view('incidentes/index', $data)

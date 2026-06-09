@@ -71,3 +71,14 @@ $routes->get('incidentes/', 'Incidentes::index', ['filter' => ['auth']] );
 $routes->post('incidentes/', 'Incidentes::index', ['filter' => ['auth']] );
 $routes->get('incidentes/empleado/(:num)', 'Incidentes::empleado/$1', ['filter' => ['auth']] );
 $routes->post('incidentes/empleado/(:num)', 'Incidentes::empleado/$1', ['filter' => ['auth']] );
+
+
+$routes->get('dia_inhabil/nuevo', 'Dia_inhabil::nuevo', ['filter' => ['auth', ]] );
+$routes->get('dia_inhabil/detalle/(:num)', 'Dia_inhabil::detalle/$1', ['filter' => ['auth', ]] );
+$routes->post('dia_inhabil/guardar', 'Dia_inhabil::guardar', ['filter' => ['auth', ]] );
+$routes->post('dia_inhabil/eliminar', 'Dia_inhabil::eliminar', ['filter' => ['auth', ]] );
+
+$routes->get('justificante_masivo/nuevo', 'Justificante_masivo::nuevo', ['filter' => ['auth', ]] );
+$routes->get('justificante_masivo/detalle/(:num)', 'Justificante_masivo::detalle/$1', ['filter' => ['auth', ]] );
+$routes->post('justificante_masivo/guardar', 'Justificante_masivo::guardar', ['filter' => ['auth', ]] );
+$routes->post('justificante_masivo/eliminar', 'Justificante_masivo::eliminar', ['filter' => ['auth', ]] );

@@ -107,7 +107,7 @@
 
         <div class="row no-print">
             <div class="ui basic segment">
-                <a class="ui basic button" href="<?= site_url('incidente') ?>">Volver</a>
+                <a class="ui basic button" href="<?= site_url('incidentes') ?>">Volver</a>
             </div>
         </div>
 

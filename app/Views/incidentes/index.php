@@ -1,7 +1,7 @@
 <div class="ui container">
     <div class="ui stackable grid">
         <div class="row">
-            <div class="twelve wide column">
+            <div class="ten wide column">
                 <div class="row">
                     <div class="ui grid">
                         <div class="twelve wide column">
@@ -14,34 +14,46 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="sixteen wide column">
                 <div class="row">
-                    <table class="ui very basic striped unstackable table" id="tbl_incidentes">
-                        <thead>
-                            <tr>
-                                <th>Clave</th>
-                                <th>Nombre</th>
-                                <th>Horario</th>
-                                <th>Incidentes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($incidentes_empleados as $incidentes_empleados_item): ?>
-                            <tr>
-                                <td> <?=$incidentes_empleados_item['cod_empleado']?> </td>
-                                <td>
-                                    <a href="<?=site_url('incidentes/empleado/')?><?=$incidentes_empleados_item['id_empleado']?>"><?= $incidentes_empleados_item['nom_empleado'] ?></a>
-                                </td>
-                                <td> <?=$incidentes_empleados_item['nom_horario']?> </td>
-                                <td> <?=$incidentes_empleados_item['num_incidentes']?> </td>
-                            </tr>
-                            <?php endforeach ?>
-                        </tbody>
-                    </table>
+                    <div class="ui stackable grid">
+                        <div class="ten wide column">
+                            <table class="ui very basic striped unstackable table" id="tbl_incidentes">
+                                <thead>
+                                    <tr>
+                                        <th>Clave</th>
+                                        <th>Nombre</th>
+                                        <th>Horario</th>
+                                        <th>Incidentes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($incidentes_empleados as $incidentes_empleados_item): ?>
+                                    <tr>
+                                        <td> <?=$incidentes_empleados_item['cod_empleado']?> </td>
+                                        <td>
+                                            <a href="<?=site_url('incidentes/empleado/')?><?=$incidentes_empleados_item['id_empleado']?>"><?= $incidentes_empleados_item['nom_empleado'] ?></a>
+                                        </td>
+                                        <td> <?=$incidentes_empleados_item['nom_horario']?> </td>
+                                        <td> <?=$incidentes_empleados_item['num_incidentes']?> </td>
+                                    </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="five wide column">
+                            <div class="ui hidden section divider"></div>
+                            <div class="ui hidden section divider"></div>
+                            <?php include 'dias_inhabiles.php' ?>
+                            <div class="ui hidden divider"></div>
+                            <?php include 'justificantes_masivos.php' ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="row no-print">
             <div class="ui basic segment">
                 <a class="ui basic button" href="<?= site_url('incidente') ?>">Volver</a>
