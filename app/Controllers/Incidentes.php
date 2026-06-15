@@ -11,6 +11,7 @@ class Incidentes extends BaseController
         $this->asistencia_model = model('Asistencia_model');
         $this->dia_inhabil_model = model('Dia_inhabil_model');
         $this->justificante_masivo_model = model('Justificante_masivo_model');
+        $this->justificante_model = model('Justificante_model');
     }
 
     public function index()
@@ -83,6 +84,7 @@ class Incidentes extends BaseController
         $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
         $data['empleado'] = $this->empleado_model->get_empleado($id_empleado);
         $data['incidentes_empleado'] = $this->incidente_model->get_incidentes_empleado($id_empleado, $mes, $anio, $tolerancia_retardo, $tolerancia_asistencia);
+        $data['vacaciones_empleado'] = $this->justificante_model->get_vacaciones_empleado($anio, $id_empleado);
 
         return view('templates/header')
             .view('incidentes/empleado', $data)

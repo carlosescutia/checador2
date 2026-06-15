@@ -10,7 +10,20 @@ class Incidente_model extends Model
     {
         $fech_ini = $anio . "-" . $mes . "-01";
         $fech_fin = date("Y-m-t", strtotime($fech_ini));
-        $sql = 'select e.id_empleado, e.cod_empleado, e.nom_empleado, h.nom_horario, count(j.cve_tipo_incidente) as num_incidentes from empleado e left join justificacion_periodo(?,?,?,?) j on j.id_empleado = e.id_empleado and j.cve_tipo_incidente is not null and j.tipo_justificante is null left join horario h on e.id_horario = h.id_horario where e.activo = 1 group by e.id_empleado, e.cod_empleado, e.nom_empleado, h.nom_horario order by e.nom_empleado';
+        $sql = ""
+            ."select "
+                ."e.id_empleado, e.cod_empleado, e.nom_empleado, h.nom_horario, count(j.cve_tipo_incidente) as num_incidentes "
+            ."from "
+                ."empleado e "
+                ."left join justificacion_periodo(?,?,?,?) j on j.id_empleado = e.id_empleado and j.cve_tipo_incidente is not null and j.tipo_justificante is null "
+                ."left join horario h on e.id_horario = h.id_horario "
+            ."where "
+                ."e.activo = 1 "
+            ."group by "
+                ."e.id_empleado, e.cod_empleado, e.nom_empleado, h.nom_horario "
+            ."order by "
+                ."e.nom_empleado"
+            ."";
         $query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia));
         return $query->getResultArray();
     }
@@ -21,7 +34,7 @@ class Incidente_model extends Model
         $fech_fin = date("Y-m-t", strtotime($fech_ini));
         $sql = ""
             ."select  "
-                ."j.id_empleado, j.fecha, j.hora_entrada, j.hora_salida, j.cve_tipo_incidente, ti.nom_tipo_incidente, j.tipo_justificante, j.id_justificante "
+                ."j.id_empleado, j.fecha, j.hora_entrada, j.hora_salida, j.horario_entrada, j.horario_salida, j.cve_tipo_incidente, j.cve_tipo_cobertura, ti.nom_tipo_incidente, j.tipo_justificante, j.id_justificante "
                 .",( "
                     ."select 'dia inhabil' from dia_inhabil di where j.tipo_justificante = 'di' and j.id_justificante = di.id_dia_inhabil "
                     ."union "

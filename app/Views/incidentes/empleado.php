@@ -14,93 +14,141 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="sixteen wide column">
                 <div class="row">
-                    <table class="ui very basic striped unstackable table">
-                        <thead>
-                            <tr>
-                                <th class="four wide">Fecha</th>
-                                <th>Entrada</th>
-                                <th>Salida</th>
-                                <th>Incidente</th>
-                                <th class="five wide">Justificante</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($incidentes_empleado as $incidentes_empleado_item): ?>
-                            <tr>
-                                <td class="col-2">
-                                    <?php
-                                        $fmt = datefmt_create(
-                                            'es_MX',
-                                            IntlDateFormatter::NONE,
-                                            IntlDateFormatter::NONE,
-                                            null,
-                                            IntlDateFormatter::GREGORIAN,
-                                            'EEE dd/MMM/yy'
-                                        );
-                                        $fecha = strtotime($incidentes_empleado_item['fecha']);
-                                    ?>
-                                    <?= datefmt_format($fmt, $fecha) ?>
-                                </td>
-                                <td class="col-1">
-                                    <?php if ( ! in_array($incidentes_empleado_item['cve_tipo_incidente'], array('sin_entrada_salida_temprano', 'sin_entrada')) ): ?>
-                                        <?php if ( in_array($incidentes_empleado_item['cve_tipo_incidente'], array('retardo_salida_temprano','retardo','entrada_tardia_salida_temprano','entrada_tardia','entrada_tardia_sin_salida')) ): ?> <u> <?php endif ?>
-                                        <?= is_null($incidentes_empleado_item['hora_entrada']) ? '' : date('H:i', strtotime($incidentes_empleado_item['hora_entrada'])) ?>
-                                        <?php if ( in_array($incidentes_empleado_item['cve_tipo_incidente'], array('retardo_salida_temprano','retardo','entrada_tardia_salida_temprano','entrada_tardia','entrada_tardia_sin_salida')) ): ?> </u> <?php endif ?>
-                                    <?php endif ?>
-                                </td>
-                                <td class="col-1">
-                                    <?php if ( ! in_array($incidentes_empleado_item['cve_tipo_incidente'], array('retardo_sin_salida', 'entrada_tardia_sin_salida', 'sin_salida')) ): ?>
-                                        <?php if ( in_array($incidentes_empleado_item['cve_tipo_incidente'], array('retardo_salida_temprano','entrada_tardia_salida_temprano','salida_temprano','sin_entrada_salida_temprano')) ): ?> <u> <?php endif ?>
-                                        <?= is_null($incidentes_empleado_item['hora_salida']) ? '' : date('H:i', strtotime($incidentes_empleado_item['hora_salida'])) ?>
-                                        <?php if ( in_array($incidentes_empleado_item['cve_tipo_incidente'], array('retardo_salida_temprano','entrada_tardia_salida_temprano','salida_temprano','sin_entrada_salida_temprano')) ): ?> </u> <?php endif ?>
-                                    <?php endif ?>
-                                </td>
-                                <td class="col-2">
-                                    <?php if ( ! $incidentes_empleado_item['id_justificante'] ): ?>
-                                        <?php /* if (in_array('99', $accesos_sistema_rol)): */?>
-                                            <!-- 
-                                            <a href="<?=base_url()?>justificantes/nuevo_justificante/<?=$incidentes_empleado_item['id_empleado']?>/<?=$incidentes_empleado_item['fecha']?>"><?= $incidentes_empleado_item['nom_tipo_incidente'] ?></a>
-                                            -->
-                                        <?php /* else: */ ?>
-                                            <?= $incidentes_empleado_item['nom_tipo_incidente'] ?>
-                                        <?php /* endif */ ?>
-                                    <?php endif ?>
-                                </td>
-                                <?php 
-                                    $url = '';
-                                    $texto = '' ;
-                                    switch ($incidentes_empleado_item['tipo_justificante']): 
-                                        case "di": 
-                                            $url = base_url() . "dias_inhabiles/detalle/" . $incidentes_empleado_item['id_justificante'] ;
-                                            $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
-                                            break;
-                                        case "jm": 
-                                            $url = base_url() . "justificantes_masivos/detalle/" . $incidentes_empleado_item['id_justificante'] ;
-                                            $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
-                                            break;
-                                        case "ji": 
-                                            $url = base_url() . "justificantes/detalle_justificante/" . $incidentes_empleado_item['id_justificante'] ;
-                                            $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
-                                            break;
-                                        case "hc": 
-                                            $url = '#';
-                                            $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
-                                            break;
-                                    endswitch
-                                ?>
-                                <td class="col-6">
-                                    <?php if ($incidentes_empleado_item['tipo_justificante'] == 'hc'): ?>
-                                        <?=$texto?>
-                                    <?php else:?>
-                                        <a href="<?=$url?>"><?=$texto?></a>
-                                    <?php endif ?>
-                                </td>
-                            </tr>
-                            <?php endforeach ?>
-                        </tbody>
-                    </table>
+                    <div class="ui stackable grid">
+                        <div class="ten wide column">
+                            <table class="ui very basic striped unstackable table">
+                                <thead>
+                                    <tr>
+                                        <th class="four wide">Fecha</th>
+                                        <th>
+                                            <h5 class="ui header">
+                                                <div class="content">Entrada</div>
+                                                <div class="sub header">Horario</div>
+                                            </h5>
+                                        </th>
+                                        <th>
+                                            <h5 class="ui header">
+                                                <div class="content">Salida</div>
+                                                <div class="sub header">Horario</div>
+                                            </h5>
+                                        </th>
+                                        <th>Incidente</th>
+                                        <th class="seven wide">Justificante</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($incidentes_empleado as $incidentes_empleado_item): ?>
+                                    <tr>
+                                        <td class="col-2">
+                                            <?php
+                                                $fmt = datefmt_create(
+                                                    'es_MX',
+                                                    IntlDateFormatter::NONE,
+                                                    IntlDateFormatter::NONE,
+                                                    null,
+                                                    IntlDateFormatter::GREGORIAN,
+                                                    'EEE dd/MMM/yy'
+                                                );
+                                                $fecha = strtotime($incidentes_empleado_item['fecha']);
+                                            ?>
+                                            <?= datefmt_format($fmt, $fecha) ?>
+                                        </td>
+                                        <td class="col-1">
+                                            <?php if ( $incidentes_empleado_item['cve_tipo_incidente'] !== 'sin_entrada' ): ?>
+                                                <h5 class="ui header">
+                                                    <?php if ( ! is_null($incidentes_empleado_item['hora_entrada']) ): ?>
+                                                        <div class="content">
+                                                            <?php if ( $incidentes_empleado_item['cve_tipo_cobertura'] == 'entrada' ): ?> 
+                                                                <u> 
+                                                            <?php endif ?>
+                                                            <?=  date('H:i', strtotime($incidentes_empleado_item['hora_entrada'])) ?>
+                                                            <?php if ( $incidentes_empleado_item['cve_tipo_cobertura'] == 'entrada' ): ?> 
+                                                                </u> 
+                                                            <?php endif ?>
+                                                            <div class="sub header">
+                                                                <?= date('H:i', strtotime($incidentes_empleado_item['horario_entrada'])) ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endif ?>
+                                                </h5>
+                                            <?php endif ?>
+                                        </td>
+                                        <td class="col-1">
+                                            <?php if ( $incidentes_empleado_item['cve_tipo_incidente'] !== 'sin_salida' ): ?>
+                                                <h5 class="ui header">
+                                                    <?php if ( ! is_null($incidentes_empleado_item['hora_salida']) ): ?>
+                                                        <div class="content">
+                                                            <?php if ( $incidentes_empleado_item['cve_tipo_cobertura'] == 'salida' ): ?> 
+                                                                <u>
+                                                            <?php endif ?>
+                                                            <?= date('H:i', strtotime($incidentes_empleado_item['hora_salida'])) ?>
+                                                            <?php if ( $incidentes_empleado_item['cve_tipo_cobertura'] == 'salida' ): ?> 
+                                                                </u>
+                                                            <?php endif ?>
+                                                            <div class="sub header">
+                                                                <?= date('H:i', strtotime($incidentes_empleado_item['horario_salida'])) ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endif ?>
+                                                </h5>
+                                            <?php endif ?>
+                                        </td>
+                                        <td class="col-2">
+                                            <?php if ( ! $incidentes_empleado_item['id_justificante'] ): ?>
+                                                <?php /* if (in_array('99', $accesos_sistema_rol)): */?>
+                                                    <!-- 
+                                                    <a href="<?=base_url()?>justificantes/nuevo_justificante/<?=$incidentes_empleado_item['id_empleado']?>/<?=$incidentes_empleado_item['fecha']?>"><?= $incidentes_empleado_item['nom_tipo_incidente'] ?></a>
+                                                    -->
+                                                <?php /* else: */ ?>
+                                                    <?= $incidentes_empleado_item['nom_tipo_incidente'] ?>
+                                                <?php /* endif */ ?>
+                                            <?php endif ?>
+                                        </td>
+                                        <?php 
+                                            $url = '';
+                                            $texto = '' ;
+                                            switch ($incidentes_empleado_item['tipo_justificante']): 
+                                                case "di": 
+                                                    $url = base_url() . "dias_inhabiles/detalle/" . $incidentes_empleado_item['id_justificante'] ;
+                                                    $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
+                                                    break;
+                                                case "jm": 
+                                                    $url = base_url() . "justificantes_masivos/detalle/" . $incidentes_empleado_item['id_justificante'] ;
+                                                    $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
+                                                    break;
+                                                case "ji": 
+                                                    $url = base_url() . "justificantes/detalle_justificante/" . $incidentes_empleado_item['id_justificante'] ;
+                                                    $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
+                                                    break;
+                                                case "hc": 
+                                                    $url = '#';
+                                                    $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
+                                                    break;
+                                            endswitch
+                                        ?>
+                                        <td class="col-6">
+                                            <?php if ($incidentes_empleado_item['tipo_justificante'] == 'hc'): ?>
+                                                <?=$texto?>
+                                            <?php else:?>
+                                                <a href="<?=$url?>"><?=$texto?></a>
+                                            <?php endif ?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="six wide column">
+                            <div class="ui hidden section divider"></div>
+                            <div class="ui hidden section divider"></div>
+                            <?php include 'vacaciones.php' ?>
+                            <div class="ui hidden divider"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

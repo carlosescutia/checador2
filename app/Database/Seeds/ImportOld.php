@@ -42,7 +42,7 @@ class ImportOld extends Seeder
         */
 
         /* catalogos */
-        $this->db->query('truncate empleado restart identity');
+        $this->db->query('truncate empleado restart identity cascade');
         $this->db->query('insert into empleado (id_empleado, cod_empleado, nom_empleado, activo, id_horario)
             select cve_empleado, cod_empleado, nom_empleado, activo, cve_horario from old.empleados');
         $this->db->query("select setval(pg_get_serial_sequence('empleado', 'id_empleado'), (select max(id_empleado) from empleado))");
@@ -62,11 +62,12 @@ class ImportOld extends Seeder
             select cve_horario, desc_horario, hora_entrada, hora_salida from old.horarios');
         $this->db->query("select setval(pg_get_serial_sequence('horario', 'id_horario'), (select max(id_horario) from horario))");
 
-        $this->db->query('truncate horario_especial restart identity');
+        $this->db->query('truncate horario_especial restart identity cascade');
         $this->db->query('insert into horario_especial (id_horario_especial, id_empleado, nom_horario_especial, fech_ini, fech_fin)
             select id_horario_especial, cve_empleado, nom_horario_especial, fech_ini, fech_fin from old.horarios_especiales');
         $this->db->query("select setval(pg_get_serial_sequence('horario_especial', 'id_horario_especial'), (select max(id_horario_especial) from horario_especial))");
 
+        $this->db->query('delete from old.horarios_especiales_dias where id_horario_especial not in (select id_horario_especial from old.horarios_especiales)');
         $this->db->query('truncate horario_especial_dia restart identity');
         $this->db->query('insert into horario_especial_dia (id_horario_especial, id_dia, id_horario)
             select id_horario_especial, cve_dia, cve_horario from old.horarios_especiales_dias');
@@ -78,28 +79,32 @@ class ImportOld extends Seeder
             select cve_asistencia, cve_empleado, fecha, hora from old.asistencias');
         $this->db->query("select setval(pg_get_serial_sequence('asistencia', 'id_asistencia'), (select max(id_asistencia) from asistencia))");
 
-        $this->db->query('truncate justificante restart identity');
+        $this->db->query('truncate justificante restart identity cascade');
         $this->db->query('insert into justificante (id_justificante, id_empleado, fecha, tipo_cobertura, detalle, id_eventualidad, fech_fin)
             select cve_justificante, cve_empleado, fecha, tipo, detalle, cve_eventualidad, fech_fin from old.justificantes');
         $this->db->query("select setval(pg_get_serial_sequence('justificante', 'id_justificante'), (select max(id_justificante) from justificante))");
         $this->db->query("update justificante set tipo_cobertura = (case tipo_cobertura when 'E' then 'entrada' when 'S' then 'salida' when 'D' then 'dia' when 'V' then 'vacaciones' end) ");
 
+        $this->db->query('delete from old.justificante_periodo where cve_justificante not in (select cve_justificante from old.justificantes) ;');
         $this->db->query('truncate justificante_periodo restart identity');
         $this->db->query('insert into justificante_periodo (id_justificante_periodo, id_justificante, id_periodo_vacacional, anio)
             select id_justificante_periodo, cve_justificante, id_periodo, anio from old.justificante_periodo');
         $this->db->query("select setval(pg_get_serial_sequence('justificante_periodo', 'id_justificante_periodo'), (select max(id_justificante_periodo) from justificante_periodo))");
 
-        $this->db->query('truncate justificante_masivo restart identity');
+        $this->db->query('truncate justificante_masivo restart identity cascade');
         $this->db->query('insert into justificante_masivo (id_justificante_masivo, fecha, detalle, tipo_cobertura, fech_fin)
             select cve_justificante_masivo, fecha, desc_justificante_masivo, tipo, fech_fin from old.justificantes_masivos');
         $this->db->query("select setval(pg_get_serial_sequence('justificante_masivo', 'id_justificante_masivo'), (select max(id_justificante_masivo) from justificante_masivo))");
         $this->db->query("update justificante_masivo set tipo_cobertura = (case tipo_cobertura when 'E' then 'entrada' when 'S' then 'salida' when 'D' then 'dia' when 'V' then 'vacaciones' end) ");
 
+        $this->db->query('delete from old.justificante_masivo_empleados where cve_justificante_masivo not in (select cve_justificante_masivo from old.justificantes_masivos)');
+        $this->db->query('delete from old.justificante_masivo_empleados where cve_empleado  not in (select cve_empleado from old.empleados)');
         $this->db->query('truncate justificante_masivo_empleado restart identity');
         $this->db->query('insert into justificante_masivo_empleado (id_justificante_masivo_empleado, id_justificante_masivo, id_empleado)
             select id_justificante_masivo_empleado, cve_justificante_masivo, cve_empleado from old.justificante_masivo_empleados');
         $this->db->query("select setval(pg_get_serial_sequence('justificante_masivo_empleado', 'id_justificante_masivo_empleado'), (select max(id_justificante_masivo_empleado) from justificante_masivo_empleado))");
 
+        $this->db->query('delete from old.justificante_masivo_periodo where cve_justificante_masivo not in (select cve_justificante_masivo from old.justificantes_masivos)');
         $this->db->query('truncate justificante_masivo_periodo restart identity');
         $this->db->query('insert into justificante_masivo_periodo (id_justificante_masivo_periodo, id_justificante_masivo, id_periodo_vacacional, anio)
             select id_justificante_masivo_periodo, cve_justificante_masivo, id_periodo, anio from old.justificante_masivo_periodo');
