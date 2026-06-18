@@ -67,7 +67,7 @@ class Justificante_model extends Model
                 ."e.nom_eventualidad "
             ."from  "
                 ."justificante j "
-                ."left join eventualidades e on e.id_eventualidad = j.id_eventualidad "
+                ."left join eventualidad e on e.id_eventualidad = j.id_eventualidad "
             ."where  "
                 ."extract(month from j.fecha) = ?  "
                 ."and extract(year from j.fecha) = ?  "

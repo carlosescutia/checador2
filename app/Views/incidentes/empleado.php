@@ -36,7 +36,12 @@
                                                 <div class="sub header">Horario</div>
                                             </h5>
                                         </th>
-                                        <th>Incidente</th>
+                                        <th>
+                                            <h5 class="ui header">
+                                                <div class="content">Incidente</div>
+                                                <div class="center aligned sub header"><?= $num_incidentes ?></div>
+                                            </h5>
+                                        </th>
                                         <th class="seven wide">Justificante</th>
                                     </tr>
                                 </thead>
@@ -99,13 +104,7 @@
                                         </td>
                                         <td class="col-2">
                                             <?php if ( ! $incidentes_empleado_item['id_justificante'] ): ?>
-                                                <?php /* if (in_array('99', $accesos_sistema_rol)): */?>
-                                                    <!-- 
-                                                    <a href="<?=base_url()?>justificantes/nuevo_justificante/<?=$incidentes_empleado_item['id_empleado']?>/<?=$incidentes_empleado_item['fecha']?>"><?= $incidentes_empleado_item['nom_tipo_incidente'] ?></a>
-                                                    -->
-                                                <?php /* else: */ ?>
-                                                    <?= $incidentes_empleado_item['nom_tipo_incidente'] ?>
-                                                <?php /* endif */ ?>
+                                            <a href="<?= site_url('justificante/nuevo/'.$incidentes_empleado_item['id_empleado'].'/'.$incidentes_empleado_item['fecha']) ?>"><?= $incidentes_empleado_item['nom_tipo_incidente'] ?></a>
                                             <?php endif ?>
                                         </td>
                                         <?php 
@@ -113,15 +112,15 @@
                                             $texto = '' ;
                                             switch ($incidentes_empleado_item['tipo_justificante']): 
                                                 case "di": 
-                                                    $url = base_url() . "dias_inhabiles/detalle/" . $incidentes_empleado_item['id_justificante'] ;
+                                                    $url = site_url() . "dia_inhabil/detalle/" . $incidentes_empleado_item['id_justificante'] ;
                                                     $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
                                                     break;
                                                 case "jm": 
-                                                    $url = base_url() . "justificantes_masivos/detalle/" . $incidentes_empleado_item['id_justificante'] ;
+                                                    $url = site_url() . "justificante_masivo/detalle/" . $incidentes_empleado_item['id_justificante'] ;
                                                     $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
                                                     break;
                                                 case "ji": 
-                                                    $url = base_url() . "justificantes/detalle_justificante/" . $incidentes_empleado_item['id_justificante'] ;
+                                                    $url = site_url() . "justificante/detalle/" . $incidentes_empleado_item['id_justificante'] ;
                                                     $texto = $incidentes_empleado_item['desc_corta_justificante'] . ': '. $incidentes_empleado_item['detalle'];
                                                     break;
                                                 case "hc": 
@@ -147,6 +146,7 @@
                             <div class="ui hidden section divider"></div>
                             <?php include 'vacaciones.php' ?>
                             <div class="ui hidden divider"></div>
+                            <?php include 'justificantes.php' ?>
                         </div>
                     </div>
                 </div>

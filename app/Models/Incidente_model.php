@@ -28,6 +28,25 @@ class Incidente_model extends Model
         return $query->getResultArray();
     }
 
+    public function get_num_incidentes_empleado($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado)
+    {
+        $fech_ini = $anio . "-" . $mes . "-01";
+        $fech_fin = date("Y-m-t", strtotime($fech_ini));
+        $sql = ""
+            ."select "
+                ."count(j.cve_tipo_incidente) as num_incidentes "
+            ."from "
+                ."empleado e "
+                ."left join justificacion_periodo(?,?,?,?) j on j.id_empleado = e.id_empleado and j.cve_tipo_incidente is not null and j.tipo_justificante is null "
+                ."left join horario h on e.id_horario = h.id_horario "
+            ."where "
+                ."e.id_empleado = ? "
+                ."and e.activo = 1 "
+            ."";
+        $query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado));
+        return $query->getRowArray()['num_incidentes'] ?? null ;
+    }
+
     public function get_incidentes_empleado($id_empleado, $mes, $anio, $tolerancia_retardo, $tolerancia_asistencia)
     {
         $fech_ini = $anio . "-" . $mes . "-01";

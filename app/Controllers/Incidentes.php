@@ -77,6 +77,7 @@ class Incidentes extends BaseController
         }
         $data['mes'] = $mes;
         $data['anio'] = $anio;
+        // xxx pendiente cambiar valores fijos por parametros del sistema
         $tolerancia_retardo = '0:15';
         $tolerancia_asistencia = '0:30';
 
@@ -84,7 +85,9 @@ class Incidentes extends BaseController
         $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
         $data['empleado'] = $this->empleado_model->get_empleado($id_empleado);
         $data['incidentes_empleado'] = $this->incidente_model->get_incidentes_empleado($id_empleado, $mes, $anio, $tolerancia_retardo, $tolerancia_asistencia);
+        $data['num_incidentes'] = $this->incidente_model->get_num_incidentes_empleado($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado);
         $data['vacaciones_empleado'] = $this->justificante_model->get_vacaciones_empleado($anio, $id_empleado);
+        $data['justificantes_empleado'] = $this->justificante_model->get_justificantes_empleado($mes, $anio, $id_empleado);
 
         return view('templates/header')
             .view('incidentes/empleado', $data)

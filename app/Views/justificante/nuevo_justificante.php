@@ -4,43 +4,51 @@
             <div class="twelve wide column">
                 <div class="row">
                     <h1 class="ui header">
-                        Editar vacación
+                        Nuevo justificante
                         <button class="ui right floated primary button" type="submit" form="frm_justificante">Guardar</button>
                     </h1>
                 </div>
 
                 <div class="ui basic segment">
-                    <form class="ui form" method="post" action="/vacacion/guardar" id="frm_justificante">
+                    <form class="ui form" method="post" action="/justificante/guardar" id="frm_justificante">
                         <div class="four wide field">
                             <label>Fecha inicial</label>
-                            <input type="date" name="fecha" id="fecha" value="<?= $justificante['fecha'] ?>">
+                            <input type="date" name="fecha" id="fecha" value="<?= $fecha ?>" <?= empty($fecha) ? '' : 'readonly' ?> >
                         </div>
                         <div class="four wide field">
                             <label>Fecha final</label>
-                            <input type="date" name="fech_fin" id="fech_fin" value="<?= $justificante['fech_fin'] ?>">
+                            <input type="date" name="fech_fin" id="fech_fin">
                         </div>
                         <div class="four wide field">
-                            <label>Periodo</label>
+                            <label>Tipo</label>
                             <div class="ui selection dropdown">
-                                <input type="hidden" name="id_periodo_vacacional" value="<?= $justificante['id_periodo_vacacional'] ?>">
+                                <input type="hidden" name="tipo_cobertura">
                                 <i class="dropdown icon"></i>
-                                <div class="default text">periodo</div>
+                                <div class="default text">tipo</div>
                                 <div class="menu">
-                                    <?php foreach ($periodos_vacacionales as $periodos_vacacionales_item) { ?>
-                                        <div class="item" data-value="<?=$periodos_vacacionales_item['id_periodo_vacacional'] ?>"><?=$periodos_vacacionales_item['nom_periodo_vacacional'] ?></div>
+                                    <div class="item" data-value="dia">Dia</div>
+                                    <div class="item" data-value="entrada">Entrada</div>
+                                    <div class="item" data-value="salida">Salida</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                            <label>Eventualidad</label>
+                            <div class="ui selection search dropdown">
+                                <input type="hidden" name="id_eventualidad">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">eventualidad</div>
+                                <div class="menu">
+                                    <?php foreach ($eventualidades as $eventualidades_item) { ?>
+                                        <div class="item" data-value="<?=$eventualidades_item['id_eventualidad'] ?>"><?=$eventualidades_item['nom_eventualidad'] ?></div>
                                     <?php } ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="four wide field">
-                            <label>Año</label>
-                            <input type="number" name="anio" id="anio" value="<?= $justificante['anio'] ?>">
-                        </div>
                         <div class="ten wide field">
                             <label>Detalle</label>
-                            <textarea name="detalle" id="detalle" rows="4"><?= $justificante['detalle'] ?></textarea>
+                            <textarea name="detalle" id="detalle" rows="4"></textarea>
                         </div>
-                        <input type="hidden" name="tipo_cobertura" value="vacaciones" value="<?= $justificante['tipo_cobertura'] ?>">
                         <input type="hidden" name="id_empleado" value="<?= $id_empleado ?>">
                         <div class="ui error message"></div>
                     </form>
@@ -80,6 +88,9 @@ $('.ui.form')
     })
 ;
 </script>
+
+
+
 
 
 

@@ -89,7 +89,8 @@ $routes->post('vacacion/guardar', 'Justificante::guardar_vacacion', ['filter' =>
 $routes->post('vacacion/eliminar', 'Justificante::eliminar', ['filter' => ['auth', ]] );
 
 $routes->get('justificante/nuevo/(:num)', 'Justificante::nuevo_justificante/$1', ['filter' => ['auth', ]] );
+$routes->get('justificante/nuevo/(:num)/(:segment)', 'Justificante::nuevo_justificante/$1/$2', ['filter' => ['auth', ]] );
 $routes->get('justificante/detalle/(:num)', 'Justificante::detalle_justificante/$1', ['filter' => ['auth', ]] );
-$routes->post('justificante/guardar', 'Justificante::guardar', ['filter' => ['auth', ]] );
+$routes->post('justificante/guardar', 'Justificante::guardar_justificante', ['filter' => ['auth', ]] );
 $routes->post('justificante/eliminar', 'Justificante::eliminar', ['filter' => ['auth', ]] );
 
