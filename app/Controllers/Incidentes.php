@@ -12,6 +12,7 @@ class Incidentes extends BaseController
         $this->dia_inhabil_model = model('Dia_inhabil_model');
         $this->justificante_masivo_model = model('Justificante_masivo_model');
         $this->justificante_model = model('Justificante_model');
+        $this->parametro_sistema_model = model('Parametro_sistema_model');
     }
 
     public function index()
@@ -39,8 +40,8 @@ class Incidentes extends BaseController
         }
         $data['mes'] = $mes;
         $data['anio'] = $anio;
-        $tolerancia_retardo = '0:15';
-        $tolerancia_asistencia = '0:30';
+        $tolerancia_retardo = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_retardo');
+        $tolerancia_asistencia = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_asistencia');
         $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
         $data['url_actual'] = site_url('incidentes');
         $data['incidentes_empleados'] = $this->incidente_model->get_lista_incidentes_empleados_todos($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia);
@@ -77,9 +78,8 @@ class Incidentes extends BaseController
         }
         $data['mes'] = $mes;
         $data['anio'] = $anio;
-        // xxx pendiente cambiar valores fijos por parametros del sistema
-        $tolerancia_retardo = '0:15';
-        $tolerancia_asistencia = '0:30';
+        $tolerancia_retardo = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_retardo');
+        $tolerancia_asistencia = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_asistencia');
 
         $data['url_actual'] = site_url('incidentes/empleado/' . $id_empleado);
         $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();

@@ -62,20 +62,28 @@ class AccesoSistemaSeeder extends Seeder
                 'cod_opcion_sistema' => 'archivo.can_delete',
             ],
             [
-                'id_rol' => 'mentor',
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'empleado.can_edit',
+            ],
+            [
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'horario.can_edit',
+            ],
+            [
+                'id_rol' => 'staff',
                 'cod_opcion_sistema' => 'reporte.can_view',
             ],
             [
-                'id_rol' => 'mentor',
-                'cod_opcion_sistema' => 'reporte_mentor.can_view',
+                'id_rol' => 'staff',
+                'cod_opcion_sistema' => 'reporte_staff.can_view',
             ],
             [
-                'id_rol' => 'alumno',
+                'id_rol' => 'empleado',
                 'cod_opcion_sistema' => 'reporte.can_view',
             ],
             [
-                'id_rol' => 'alumno',
-                'cod_opcion_sistema' => 'reporte_alumno.can_view',
+                'id_rol' => 'empleado',
+                'cod_opcion_sistema' => 'reporte_empleado.can_view',
             ],
         ];
 

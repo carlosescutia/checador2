@@ -8,14 +8,36 @@
                     <div class="ui stackable grid container">
                         <?php
                             $permisos_requeridos = array(
-                            'recurso.can_edit',
+                                'empleado.can_edit',
                             );
-                            if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                                <div class="four wide column">
-                                    <?php include "recurso/boton.php" ?>
-                                </div>
-                            <?php }
                         ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "empleado/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
+                                'recurso.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "recurso/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
+                                'parametro_sistema.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="five wide column">
+                                <?php include "parametro_sistema/boton.php" ?>
+                            </div>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -26,62 +48,47 @@
                 <div class="ui stackable grid container">
                     <?php
                         $permisos_requeridos = array(
-                        'usuario.can_edit',
+                            'usuario.can_edit',
                         );
-                        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                            <div class="sixteen wide column">
-                                <?php include "usuario/boton.php" ?>
-                            </div>
-                        <?php }
                     ?>
-                </div>
-                <div class="ui stackable grid container">
+                    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                        <div class="sixteen wide column">
+                            <?php include "usuario/boton.php" ?>
+                        </div>
+                    <?php endif ?>
+
                     <?php
                         $permisos_requeridos = array(
-                        'rol.can_view',
+                            'rol.can_view',
                         );
-                        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                            <div class="sixteen wide column">
-                                <?php include "rol/boton.php" ?>
-                            </div>
-                        <?php }
                     ?>
-                </div>
-                <div class="ui stackable grid container">
+                    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                        <div class="sixteen wide column">
+                            <?php include "rol/boton.php" ?>
+                        </div>
+                    <?php endif ?>
+
                     <?php
                         $permisos_requeridos = array(
-                        'opcion_sistema.can_edit',
+                            'opcion_sistema.can_edit',
                         );
-                        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                            <div class="sixteen wide column">
-                                <?php include "opcion_sistema/boton.php" ?>
-                            </div>
-                        <?php }
                     ?>
-                </div>
-                <div class="ui stackable grid container">
+                    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                        <div class="sixteen wide column">
+                            <?php include "opcion_sistema/boton.php" ?>
+                        </div>
+                    <?php endif ?>
+
                     <?php
                         $permisos_requeridos = array(
-                        'acceso_sistema.can_edit',
+                            'acceso_sistema.can_edit',
                         );
-                        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                            <div class="sixteen wide column">
-                                <?php include "acceso_sistema/boton.php" ?>
-                            </div>
-                        <?php }
                     ?>
-                </div>
-                <div class="ui stackable grid container">
-                    <?php
-                        $permisos_requeridos = array(
-                        'parametro_sistema.can_edit',
-                        );
-                        if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
-                            <div class="sixteen wide column">
-                                <?php include "parametro_sistema/boton.php" ?>
-                            </div>
-                        <?php }
-                    ?>
+                    <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                        <div class="sixteen wide column">
+                            <?php include "acceso_sistema/boton.php" ?>
+                        </div>
+                    <?php endif ?>
                 </div>
             </div>
         </div>

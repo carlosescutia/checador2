@@ -94,3 +94,18 @@ $routes->get('justificante/detalle/(:num)', 'Justificante::detalle_justificante/
 $routes->post('justificante/guardar', 'Justificante::guardar_justificante', ['filter' => ['auth', ]] );
 $routes->post('justificante/eliminar', 'Justificante::eliminar', ['filter' => ['auth', ]] );
 
+
+$routes->get('empleado', 'Empleado::index', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );
+$routes->get('empleado/detalle/(:num)', 'Empleado::detalle/$1', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );
+$routes->get('empleado/nuevo', 'Empleado::nuevo', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );
+$routes->post('empleado/guardar', 'Empleado::guardar', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );
+$routes->post('empleado/guardar_activo', 'Empleado::guardar_activo', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );
+$routes->post('empleado/eliminar', 'Empleado::eliminar', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );
+
+$routes->get('horario', 'Horario::index', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
+$routes->get('horario/detalle/(:num)', 'Horario::detalle/$1', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
+$routes->get('horario/nuevo/(:num)', 'Horario::nuevo/$1', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
+$routes->post('horario/guardar', 'Horario::guardar', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
+$routes->post('horario/guardar_activo', 'Horario::guardar_activo', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
+$routes->post('horario/eliminar', 'Horario::eliminar', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
+

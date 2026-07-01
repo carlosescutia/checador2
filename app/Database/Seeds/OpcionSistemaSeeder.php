@@ -79,6 +79,16 @@ class OpcionSistemaSeeder extends Seeder
                 'nom_opcion_sistema' => 'Eliminar archivos',
                 'otorgable' => null
             ],
+            [
+                'cod_opcion_sistema' => 'empleado.can_edit',
+                'nom_opcion_sistema' => 'Editar empleados',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'horario.can_edit',
+                'nom_opcion_sistema' => 'Editar horarios',
+                'otorgable' => null
+            ],
         ];
 
         $this->db->table('opcion_sistema')->insertBatch($data);

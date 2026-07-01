@@ -16,29 +16,32 @@ class Empleado_model extends Model
         'id_horario',
     ];
 
-    public function get_empleados_todos()
+    public function get_empleados($filtro)
     {
-        $sql = ""
-            ."select "
-            ."e.* "
-            ."from "
-            ."empleado e "
-            ."order by nom_empleado "
-            ."";
-        $query = $this->db->query($sql);
-        return $query->getResultArray();
-    }
+        switch ($filtro) {
+            case 'activos':
+                $condicion = "where activo = 1 ";
+                break;
+            case 'inactivos':
+                $condicion = "where coalesce(activo, 0) = 0 ";
+                break;
+            case 'todos':
+                $condicion = "";
+                break;
+            default:
+                $condicion = "";
+        }
 
-    public function get_empleados_activos()
-    {
         $sql = ""
             ."select "
-            ."e.* "
+                ."e.* "
             ."from "
-            ."empleado e "
-            ."where "
-            ."e.activo = 1 "
-            ."order by nom_empleado "
+                ."empleado e "
+            ."";
+        $sql .= $condicion;
+        $sql .= ""
+            ."order by "
+                ."nom_empleado "
             ."";
         $query = $this->db->query($sql);
         return $query->getResultArray();

@@ -17,7 +17,7 @@ class Justificante_masivo extends BaseController
     public function detalle($id_justificante_masivo)
     {
         $data['justificante_masivo'] = $this->justificante_masivo_model->get_justificante_masivo($id_justificante_masivo);
-        $data['empleados'] = $this->empleado_model->get_empleados_activos();
+        $data['empleados'] = $this->empleado_model->get_empleados('activos');
         $data['empleados_justificante_masivo'] = explode(',', $this->justificante_masivo_empleado_model->get_empleados_justificante_masivo($id_justificante_masivo));
         $data['periodos_vacacionales'] = $this->periodo_vacacional_model->get_periodos_vacacionales();
         $data['tipos_cobertura'] = $this->tipo_cobertura_model->get_tipos_cobertura();
@@ -29,7 +29,7 @@ class Justificante_masivo extends BaseController
 
     public function nuevo()
     {
-        $data['empleados'] = $this->empleado_model->get_empleados_activos();
+        $data['empleados'] = $this->empleado_model->get_empleados('activos');
         $data['tipos_cobertura'] = $this->tipo_cobertura_model->get_tipos_cobertura();
         $data['periodos_vacacionales'] = $this->periodo_vacacional_model->get_periodos_vacacionales();
 

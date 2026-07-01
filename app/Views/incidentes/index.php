@@ -19,31 +19,29 @@
             <div class="sixteen wide column">
                 <div class="row">
                     <div class="ui stackable grid">
-                        <div class="ten wide column">
+                        <div class="eight wide column">
                             <table class="ui very basic striped unstackable table" id="tbl_incidentes">
                                 <thead>
                                     <tr>
-                                        <th>Clave</th>
                                         <th>Nombre</th>
-                                        <th>Horario</th>
                                         <th>Incidentes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($incidentes_empleados as $incidentes_empleados_item): ?>
                                     <tr>
-                                        <td> <?=$incidentes_empleados_item['cod_empleado']?> </td>
                                         <td>
                                             <a href="<?=site_url('incidentes/empleado/')?><?=$incidentes_empleados_item['id_empleado']?>"><?= $incidentes_empleados_item['nom_empleado'] ?></a>
                                         </td>
-                                        <td> <?=$incidentes_empleados_item['nom_horario']?> </td>
-                                        <td> <?=$incidentes_empleados_item['num_incidentes']?> </td>
+                                        <td><?=$incidentes_empleados_item['num_incidentes']?></td>
                                     </tr>
                                     <?php endforeach ?>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="five wide column">
+                        <div class="one wide column">
+                        </div>
+                        <div class="seven wide column">
                             <div class="ui hidden section divider"></div>
                             <div class="ui hidden section divider"></div>
                             <?php include 'dias_inhabiles.php' ?>
@@ -68,7 +66,7 @@ $(document).ready( function () {
         responsive: true,
         pageLength: 50,
         lengthMenu: [10, 50, -1],
-        order: [ [1, 'asc'] ],
+        order: [ [0, 'asc'] ],
         language: {
             url: '<?=base_url()?>assets/js/es-MX.json',
             lengthLabels: { 

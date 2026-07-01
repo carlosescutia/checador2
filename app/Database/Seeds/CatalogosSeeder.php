@@ -8,6 +8,11 @@ class CatalogosSeeder extends Seeder
 {
     public function run()
     {
+        /*
+        ------------------
+        seeding de catálogos de sistema
+        ------------------
+        */
         $this->call('OpcionSistemaSeeder');
         $this->call('AccesoSistemaSeeder');
         $this->call('ParametroSistemaSeeder');
