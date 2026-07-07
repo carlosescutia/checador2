@@ -121,7 +121,6 @@ $('.ui.form')
     .form({
         fields: {
             nom_usuario: {
-                identifier: 'nom_usuario',
                 rules: [
                     {
                         type   : 'notEmpty',
@@ -130,7 +129,6 @@ $('.ui.form')
                 ]
             },
             nom_login: {
-                identifier: 'nom_login',
                 rules: [
                     {
                         type   : 'notEmpty',
@@ -139,7 +137,6 @@ $('.ui.form')
                 ]
             },
             password: {
-                identifier: 'password',
                 rules: [
                     {
                         type   : 'notEmpty',
@@ -148,7 +145,6 @@ $('.ui.form')
                 ]
             },
             id_rol: {
-                identifier: 'id_rol',
                 rules: [
                     {
                         type   : 'notEmpty',

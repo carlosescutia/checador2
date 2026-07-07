@@ -70,6 +70,26 @@ class AccesoSistemaSeeder extends Seeder
                 'cod_opcion_sistema' => 'horario.can_edit',
             ],
             [
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'periodo_vacacional.can_edit',
+            ],
+            [
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'eventualidad.can_edit',
+            ],
+            [
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'tipo_cobertura.can_edit',
+            ],
+            [
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'tipo_incidente.can_edit',
+            ],
+            [
+                'id_rol' => 'admin',
+                'cod_opcion_sistema' => 'tipo_justificante.can_edit',
+            ],
+            [
                 'id_rol' => 'staff',
                 'cod_opcion_sistema' => 'reporte.can_view',
             ],

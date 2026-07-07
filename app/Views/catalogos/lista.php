@@ -19,6 +19,61 @@
 
                         <?php
                             $permisos_requeridos = array(
+                                'eventualidad.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "eventualidad/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
+                                'tipo_cobertura.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "tipo_cobertura/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
+                                'tipo_incidente.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "tipo_incidente/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
+                                'tipo_justificante.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "tipo_justificante/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
+                                'periodo_vacacional.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <div class="four wide column">
+                                <?php include "periodo_vacacional/boton.php" ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                            $permisos_requeridos = array(
                                 'recurso.can_edit',
                             );
                         ?>

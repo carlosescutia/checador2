@@ -109,3 +109,33 @@ $routes->post('horario/guardar', 'Horario::guardar', ['filter' => ['auth', 'perm
 $routes->post('horario/guardar_activo', 'Horario::guardar_activo', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
 $routes->post('horario/eliminar', 'Horario::eliminar', ['filter' => ['auth', 'perms_and:horario.can_edit']] );
 
+$routes->get('periodo_vacacional/', 'Periodo_vacacional::index', ['filter' => ['auth', 'perms_and:periodo_vacacional.can_edit']] );
+$routes->get('periodo_vacacional/detalle/(:num)', 'Periodo_vacacional::detalle/$1', ['filter' => ['auth', 'perms_and:periodo_vacacional.can_edit']] );
+$routes->get('periodo_vacacional/nuevo', 'Periodo_vacacional::nuevo', ['filter' => ['auth', 'perms_and:periodo_vacacional.can_edit']] );
+$routes->post('periodo_vacacional/guardar', 'Periodo_vacacional::guardar', ['filter' => ['auth', 'perms_and:periodo_vacacional.can_edit']] );
+$routes->post('periodo_vacacional/eliminar', 'Periodo_vacacional::eliminar', ['filter' => ['auth', 'perms_and:periodo_vacacional.can_edit']] );
+
+$routes->get('eventualidad/', 'Eventualidad::index', ['filter' => ['auth', 'perms_and:eventualidad.can_edit']] );
+$routes->get('eventualidad/detalle/(:num)', 'Eventualidad::detalle/$1', ['filter' => ['auth', 'perms_and:eventualidad.can_edit']] );
+$routes->get('eventualidad/nuevo', 'Eventualidad::nuevo', ['filter' => ['auth', 'perms_and:eventualidad.can_edit']] );
+$routes->post('eventualidad/guardar', 'Eventualidad::guardar', ['filter' => ['auth', 'perms_and:eventualidad.can_edit']] );
+$routes->post('eventualidad/eliminar', 'Eventualidad::eliminar', ['filter' => ['auth', 'perms_and:eventualidad.can_edit']] );
+
+$routes->get('tipo_cobertura/', 'Tipo_cobertura::index', ['filter' => ['auth', 'perms_and:tipo_cobertura.can_edit']] );
+$routes->get('tipo_cobertura/detalle/(:num)', 'Tipo_cobertura::detalle/$1', ['filter' => ['auth', 'perms_and:tipo_cobertura.can_edit']] );
+$routes->get('tipo_cobertura/nuevo', 'Tipo_cobertura::nuevo', ['filter' => ['auth', 'perms_and:tipo_cobertura.can_edit']] );
+$routes->post('tipo_cobertura/guardar', 'Tipo_cobertura::guardar', ['filter' => ['auth', 'perms_and:tipo_cobertura.can_edit']] );
+$routes->post('tipo_cobertura/eliminar', 'Tipo_cobertura::eliminar', ['filter' => ['auth', 'perms_and:tipo_cobertura.can_edit']] );
+
+$routes->get('tipo_incidente/', 'Tipo_incidente::index', ['filter' => ['auth', 'perms_and:tipo_incidente.can_edit']] );
+$routes->get('tipo_incidente/detalle/(:num)', 'Tipo_incidente::detalle/$1', ['filter' => ['auth', 'perms_and:tipo_incidente.can_edit']] );
+$routes->get('tipo_incidente/nuevo', 'Tipo_incidente::nuevo', ['filter' => ['auth', 'perms_and:tipo_incidente.can_edit']] );
+$routes->post('tipo_incidente/guardar', 'Tipo_incidente::guardar', ['filter' => ['auth', 'perms_and:tipo_incidente.can_edit']] );
+$routes->post('tipo_incidente/eliminar', 'Tipo_incidente::eliminar', ['filter' => ['auth', 'perms_and:tipo_incidente.can_edit']] );
+
+$routes->get('tipo_justificante/', 'Tipo_justificante::index', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
+$routes->get('tipo_justificante/detalle/(:num)', 'Tipo_justificante::detalle/$1', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
+$routes->get('tipo_justificante/nuevo', 'Tipo_justificante::nuevo', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
+$routes->post('tipo_justificante/guardar', 'Tipo_justificante::guardar', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
+$routes->post('tipo_justificante/eliminar', 'Tipo_justificante::eliminar', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
+

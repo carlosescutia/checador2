@@ -4,21 +4,21 @@
             <div class="twelve wide column">
                 <div class="row">
                     <h1 class="ui header">
-                        Agregar parametro sistema
-                        <button class="ui right floated primary button" type="submit" form="frm_parametro_sistema">Guardar</button>
+                        Agregar periodo vacacional
+                        <button class="ui right floated primary button" type="submit" form="frm_periodo_vacacional">Guardar</button>
                     </h1>
                 </div>
 
                 <div class="ui basic segment">
-                    <form class="ui form" method="post" action="/parametro_sistema/guardar" id="frm_parametro_sistema">
+                    <form class="ui form" method="post" action="/periodo_vacacional/guardar" id="frm_periodo_vacacional">
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>Nombre</label>
-                                <input type="text" name="nom_parametro_sistema" id="nom_parametro_sistema">
+                                <input type="text" name="nom_periodo_vacacional" id="nom_periodo_vacacional">
                             </div>
                             <div class="four wide field">
-                                <label>Valor</label>
-                                <input type="text" name="valor" id="valor">
+                                <label>Orden</label>
+                                <input type="text" name="orden" id="orden">
                             </div>
                         </div>
 
@@ -30,7 +30,7 @@
 
         <div class="row">
             <div class="ui basic segment">
-                <a class="ui basic button" href="<?= site_url('parametro_sistema') ?>">Volver</a>
+                <a class="ui basic button" href="<?= site_url('periodo_vacacional') ?>">Volver</a>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
 $('.ui.form')
     .form({
         fields: {
-            nom_parametro_sistema: {
+            nom_periodo_vacacional: {
                 rules: [
                     {
                         type   : 'notEmpty',
@@ -48,11 +48,11 @@ $('.ui.form')
                     }
                 ]
             },
-            valor: {
+            orden: {
                 rules: [
                     {
                         type   : 'notEmpty',
-                        prompt : 'Valor no puede estar vacio'
+                        prompt : 'Orden no puede estar vacio'
                     }
                 ]
             },

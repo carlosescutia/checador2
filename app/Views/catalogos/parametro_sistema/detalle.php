@@ -42,7 +42,6 @@ $('.ui.form')
     .form({
         fields: {
             nom_parametro_sistema: {
-                identifier: 'nom_parametro_sistema',
                 rules: [
                     {
                         type   : 'notEmpty',
@@ -51,7 +50,6 @@ $('.ui.form')
                 ]
             },
             valor: {
-                identifier: 'valor',
                 rules: [
                     {
                         type   : 'notEmpty',

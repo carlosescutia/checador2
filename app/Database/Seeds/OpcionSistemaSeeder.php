@@ -89,6 +89,31 @@ class OpcionSistemaSeeder extends Seeder
                 'nom_opcion_sistema' => 'Editar horarios',
                 'otorgable' => null
             ],
+            [
+                'cod_opcion_sistema' => 'periodo_vacacional.can_edit',
+                'nom_opcion_sistema' => 'Editar periodos vacacionales',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'eventualidad.can_edit',
+                'nom_opcion_sistema' => 'Editar periodos vacacionales',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'tipo_cobertura.can_edit',
+                'nom_opcion_sistema' => 'Editar periodos vacacionales',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'tipo_incidente.can_edit',
+                'nom_opcion_sistema' => 'Editar periodos vacacionales',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'tipo_justificante.can_edit',
+                'nom_opcion_sistema' => 'Editar periodos vacacionales',
+                'otorgable' => null
+            ],
         ];
 
         $this->db->table('opcion_sistema')->insertBatch($data);
