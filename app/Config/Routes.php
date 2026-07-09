@@ -145,3 +145,5 @@ $routes->get('tipo_justificante/nuevo', 'Tipo_justificante::nuevo', ['filter' =>
 $routes->post('tipo_justificante/guardar', 'Tipo_justificante::guardar', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
 $routes->post('tipo_justificante/eliminar', 'Tipo_justificante::eliminar', ['filter' => ['auth', 'perms_and:tipo_justificante.can_edit']] );
 
+$routes->get('importar/', 'Importar::index', ['filter' => ['auth', 'perms_and:importar.can_edit']] );
+$routes->post('importar/guardar', 'Importar::guardar', ['filter' => ['auth', 'perms_and:importar.can_edit']] );

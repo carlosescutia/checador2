@@ -41,5 +41,39 @@ class Asistencia_model extends Model
         return $query->getResultArray();
     }
 
-}
+    public function get_tot_asistencias()
+    {
+        $sql = 'select count(*) as tot_asistencias from asistencia ;';
+        $query = $this->db->query($sql);
+        return $query->getRowArray()['tot_asistencias'] ?? null ;
+    }
 
+    public function get_asistencia_antigua()
+    {
+        $sql = "select min(fecha::text || ' ' || hora::text) as asistencia_antigua from asistencia";
+        $query = $this->db->query($sql);
+        return $query->getRowArray()['asistencia_antigua'] ?? null ;
+    }
+
+    public function get_asistencia_reciente()
+    {
+        $sql = "select max(fecha::text || ' ' || hora::text) as asistencia_reciente from asistencia";
+        $query = $this->db->query($sql);
+        return $query->getRowArray()['asistencia_reciente'] ?? null ;
+    }
+
+    public function existe($data)
+    {
+        $sql = 'select id_asistencia from asistencia where id_empleado = ? and fecha = ? and hora = ? ';
+        $query = $this->db->query($sql, array($data['id_empleado'], $data['fecha'], $data['hora']));
+        return $query->getNumRows();
+    }
+
+    public function guardar($data)
+    {
+        if ( ! $this->existe($data) ) {
+            $this->db->insert('asistencia', $data);
+        }
+    }
+
+}

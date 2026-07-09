@@ -22,7 +22,7 @@ class Archivo extends BaseController
 
             $validationRule = [
                 'userfile' => [
-                    'label' => 'Image File',
+                    'label' => 'Archivo subido',
                     'rules' => [
                         'uploaded[userfile]',
                         'ext_in[userfile,' . $tipo_archivo . ']',

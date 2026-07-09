@@ -41,6 +41,7 @@ php_errors.log
 /public/docs/*
 /public/imgs/*
 /public/recs/*
+/public/import/*
 
 #-------------------------
 # User Guide Temp Files

@@ -114,6 +114,11 @@ class OpcionSistemaSeeder extends Seeder
                 'nom_opcion_sistema' => 'Editar periodos vacacionales',
                 'otorgable' => null
             ],
+            [
+                'cod_opcion_sistema' => 'importar.can_edit',
+                'nom_opcion_sistema' => 'Importar del checador',
+                'otorgable' => null
+            ],
         ];
 
         $this->db->table('opcion_sistema')->insertBatch($data);
