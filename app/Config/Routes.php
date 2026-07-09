@@ -65,6 +65,12 @@ $routes->get('proceso/', 'Proceso::index');
 $routes->get('reportes/', 'Reportes::index', ['filter' => ['auth', 'perms_and:reporte.can_view']] );
 $routes->get('reportes/bitacora', 'Reportes::bitacora', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
 $routes->get('reportes/bitacora/(:segment)', 'Reportes::bitacora/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->get('reportes/asistencia', 'Reportes::asistencia', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->post('reportes/asistencia', 'Reportes::asistencia', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->get('reportes/asistencia/(:segment)', 'Reportes::asistencia/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->get('reportes/incidentes', 'Reportes::incidentes', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->post('reportes/incidentes', 'Reportes::incidentes', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->get('reportes/incidentes/(:segment)', 'Reportes::incidentes/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
 
 
 $routes->get('incidentes/', 'Incidentes::index', ['filter' => ['auth']] );
