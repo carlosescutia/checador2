@@ -3,7 +3,7 @@
         <div class="seven wide column">
             <div class="row">
                 <div class="ui green center aligned segment">
-                    <h1 class="ui center aligned header">Registro de nuevo alumno</h1>
+                    <h1 class="ui center aligned header">Registro de nuevo empleado</h1>
                     <?php if ($error): ?>
                         <div class="ui negative message transition">
                             <div class="header">

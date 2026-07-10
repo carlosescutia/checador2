@@ -8,13 +8,9 @@ class ParametroSistemaSeeder extends Seeder
 {
     public function run()
     {
-        $this->db->query('truncate parametro_sistema restart identity');
+        $this->db->query('truncate parametro_sistema restart identity cascade');
 
         $data = [
-            [
-                'nom_parametro_sistema' => 'anio',
-                'valor' => '2026',
-            ],
             [
                 'nom_parametro_sistema' => 'hora_entrada',
                 'valor' => '09:00',
@@ -36,7 +32,8 @@ class ParametroSistemaSeeder extends Seeder
                 'valor' => '0:30',
             ],
         ];
-
         $this->db->table('parametro_sistema')->insertBatch($data);
+
+        $this->db->query("select setval(pg_get_serial_sequence('parametro_sistema', 'id_parametro_sistema'), (select max(id_parametro_sistema) from parametro_sistema))");
     }
 }

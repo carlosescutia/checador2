@@ -22,7 +22,7 @@
                             <td>
                                 <h4 class="ui image header">
                                     <div class="content">
-                                        <a class="item"><?= $roles_item['nom_rol'] ?></a>
+                                        <a href="<?=site_url('rol/detalle/')?><?=$roles_item['id_rol']?>"><?= $roles_item['nom_rol'] ?></a>
                                         <div class="sub header"><?=$roles_item['id_rol']?></div>
                                     </div>
                                 </h4>

@@ -8,6 +8,8 @@ class TipoJustificanteSeeder extends Seeder
 {
     public function run()
     {
+        $this->db->query('truncate tipo_justificante restart identity cascade');
+
         $data = [
             [
                 'cve_tipo_justificante' => 'dia_inhabil',
@@ -42,7 +44,8 @@ class TipoJustificanteSeeder extends Seeder
                 'nom_tipo_justificante' => 'Cumple horas de trabajo',
             ],
         ];
-
         $this->db->table('tipo_justificante')->insertBatch($data);
+
+        $this->db->query("select setval(pg_get_serial_sequence('tipo_justificante', 'id_tipo_justificante'), (select max(id_tipo_justificante) from tipo_justificante))");
     }
 }

@@ -8,6 +8,8 @@ class OpcionSistemaSeeder extends Seeder
 {
     public function run()
     {
+        $this->db->query('truncate opcion_sistema restart identity cascade');
+
         $data = [
             [
                 'cod_opcion_sistema' => 'reporte.can_view',
@@ -15,13 +17,13 @@ class OpcionSistemaSeeder extends Seeder
                 'otorgable' => null
             ],
             [
-                'cod_opcion_sistema' => 'reporte_alumno.can_view',
-                'nom_opcion_sistema' => 'Reportes de alumno',
+                'cod_opcion_sistema' => 'reporte_empleado.can_view',
+                'nom_opcion_sistema' => 'Reportes de empleado',
                 'otorgable' => null
             ],
             [
-                'cod_opcion_sistema' => 'reporte_mentor.can_view',
-                'nom_opcion_sistema' => 'Reportes de mentor',
+                'cod_opcion_sistema' => 'reporte_operador.can_view',
+                'nom_opcion_sistema' => 'Reportes de operador',
                 'otorgable' => null
             ],
             [
@@ -96,7 +98,7 @@ class OpcionSistemaSeeder extends Seeder
             ],
             [
                 'cod_opcion_sistema' => 'eventualidad.can_edit',
-                'nom_opcion_sistema' => 'Editar periodos vacacionales',
+                'nom_opcion_sistema' => 'Editar eventualidades',
                 'otorgable' => null
             ],
             [
@@ -119,8 +121,24 @@ class OpcionSistemaSeeder extends Seeder
                 'nom_opcion_sistema' => 'Importar del checador',
                 'otorgable' => null
             ],
+            [
+                'cod_opcion_sistema' => 'dia_inhabil.can_edit',
+                'nom_opcion_sistema' => 'Editar dias inhábiles',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'justificante.can_edit',
+                'nom_opcion_sistema' => 'Editar justificantes',
+                'otorgable' => null
+            ],
+            [
+                'cod_opcion_sistema' => 'justificante_masivo.can_edit',
+                'nom_opcion_sistema' => 'Editar justificantes masivos',
+                'otorgable' => null
+            ],
         ];
-
         $this->db->table('opcion_sistema')->insertBatch($data);
+
+        $this->db->query("select setval(pg_get_serial_sequence('opcion_sistema', 'id_opcion_sistema'), (select max(id_opcion_sistema) from opcion_sistema))");
     }
 }

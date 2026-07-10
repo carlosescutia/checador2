@@ -1,8 +1,15 @@
 <div class="ui orange segment">
     <h4 class="ui center aligned header">
-        <a class="circular ui right floated primary mini icon button" href="<?= site_url('dia_inhabil/nuevo') ?>">
-            <i class="icon add"></i>
-        </a>
+        <?php
+            $permisos_requeridos = array(
+                'dia_inhabil.can_edit',
+            );
+        ?>
+        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+            <a class="circular ui right floated primary mini icon button" href="<?= site_url('dia_inhabil/nuevo') ?>">
+                <i class="icon add"></i>
+            </a>
+        <?php endif ?>
         Dias inhábiles
     </h4>
     <div class="ui divider"></div>
@@ -30,21 +37,37 @@
                             );
                             $fecha = strtotime($dias_inhabiles_item['fecha']);
                         ?>
-                        <a href="<?= site_url('dia_inhabil/detalle/' . $dias_inhabiles_item['id_dia_inhabil']) ?>">
+                        <?php
+                            $permisos_requeridos = array(
+                                'dia_inhabil.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <a href="<?= site_url('dia_inhabil/detalle/' . $dias_inhabiles_item['id_dia_inhabil']) ?>">
+                        <?php endif ?>
                             <?= datefmt_format($fmt, $fecha) ?>
-                        </a>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            </a>
+                        <?php endif ?>
                     </td>
                     <td><?= $dias_inhabiles_item['detalle'] ?></td>
                     <td>
-                        <form class="ui form" method="post" action="/dia_inhabil/eliminar" id="frm_elim_dia_inhabil<?=$dias_inhabiles_item['id_dia_inhabil']?>">
-                            <input type="hidden" name="id_dia_inhabil" id="id_dia_inhabil" value="<?= $dias_inhabiles_item['id_dia_inhabil'] ?>" >
-                            <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('incidentes') ?>">
-                            <?php
-                                $mensaje = 'Se eliminará el dia inhábil <strong>' . datefmt_format($fmt, $fecha) . '</strong>.<br>¿Está seguro?' ;
-                                $forma = '#frm_elim_dia_inhabil' . $dias_inhabiles_item['id_dia_inhabil'] ;
-                            ?>
-                            <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
-                        </form>
+                        <?php
+                            $permisos_requeridos = array(
+                                'dia_inhabil.can_edit',
+                            );
+                        ?>
+                        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                            <form class="ui form" method="post" action="/dia_inhabil/eliminar" id="frm_elim_dia_inhabil<?=$dias_inhabiles_item['id_dia_inhabil']?>">
+                                <input type="hidden" name="id_dia_inhabil" id="id_dia_inhabil" value="<?= $dias_inhabiles_item['id_dia_inhabil'] ?>" >
+                                <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('incidentes') ?>">
+                                <?php
+                                    $mensaje = 'Se eliminará el dia inhábil <strong>' . datefmt_format($fmt, $fecha) . '</strong>.<br>¿Está seguro?' ;
+                                    $forma = '#frm_elim_dia_inhabil' . $dias_inhabiles_item['id_dia_inhabil'] ;
+                                ?>
+                                <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                            </form>
+                        <?php endif ?>
                     </td>
                 </tr>
                 <?php endforeach ?>

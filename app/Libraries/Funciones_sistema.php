@@ -21,12 +21,8 @@ class Funciones_sistema {
 
         $data['permisos_usuario'] = explode(',', $this->acceso_sistema_model->get_permisos_usuario($id_usuario));
 
-        return $data;
-    }
-
-    public function get_system_params()
-    {
-        $data['anio'] = $this->parametro_sistema_model->get_parametro_sistema_nom('anio');
+        $tipo_rol = 'rol_' . $data['userdata']['id_rol'];
+        array_push($data['permisos_usuario'], $tipo_rol);
 
         return $data;
     }

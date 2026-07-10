@@ -61,32 +61,35 @@
 </head>
 <body>
 
+<?php
+    $session = service('session');
+    $userdata = $session->get();
+    $id_usuario = $userdata['id_usuario'];
+
+    $acceso_sistema_model = model('Acceso_sistema_model');
+    $permisos_usuario = explode(',', $acceso_sistema_model->get_permisos_usuario($id_usuario));
+?>
+
 <!-- Sidebar Menu -->
 <div class="ui left vertical sidebar massive menu">
-    <a class="item" href="<?=site_url()?>">
-      <i class="home icon"></i>
-      Inicio
-    </a>
-    <?php
-        $session = service('session');
-        $userdata = $session->get();
-        $id_usuario = $userdata['id_usuario'];
 
-        $acceso_sistema_model = model('Acceso_sistema_model');
-        $permisos_usuario = explode(',', $acceso_sistema_model->get_permisos_usuario($id_usuario));
-    ?>
+    <a class="item" href="<?=site_url('incidentes')?>">
+      <i class="home icon"></i>
+        Incidentes
+    </a>
 
     <?php
         $permisos_requeridos = array(
-            'proceso.can_view',
+            'importar.can_edit',
         );
     ?>
     <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
-            <a class="item" href="<?=site_url('proceso')?>">
-                <i class="block layout icon"></i>
-                Proceso
-            </a>
+        <a class="item" href="<?=site_url('importar')?>">
+            <i class="file alternate icon"></i>
+            Importar
+        </a>
     <?php endif ?>
+
     <?php
         $permisos_requeridos = array(
             'reporte.can_view',
@@ -98,6 +101,7 @@
             Reportes
         </a>
     <?php endif ?>
+
     <?php
         $permisos_requeridos = array(
             'catalogo.can_view',
@@ -109,14 +113,17 @@
             Catálogos
         </a>
     <?php endif ?>
+
     <a class="item">
       <i class="user icon"></i>
       <?= $userdata['nom_usuario'] ?>
     </a>
+
     <a class="item" href="<?=site_url('logout')?>">
         <i class="sign out alternate icon"></i>
         Salir
     </a>
+
 </div>
 
 <!-- Page Contents -->
@@ -153,17 +160,17 @@
                 </div>
             </div>
 
-            <a class="item" href="<?=site_url()?>">Inicio</a>
             <a class="item" href="<?=site_url('incidentes')?>">Incidentes</a>
-            <a class="item" href="<?=site_url('importar')?>">Importar</a>
+
             <?php
                 $permisos_requeridos = array(
-                    'proceso.can_view',
+                    'importar.can_edit',
                 );
             ?>
             <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
-                <a class="item" href="<?=site_url('proceso')?>">Proceso</a>
+                <a class="item" href="<?=site_url('importar')?>">Importar</a>
             <?php endif ?>
+
             <?php
                 $permisos_requeridos = array(
                     'reporte.can_view',
@@ -172,6 +179,7 @@
             <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
                 <a class="item" href="<?=site_url('reportes')?>">Reportes</a>
             <?php endif ?>
+
             <?php
                 $permisos_requeridos = array(
                     'catalogo.can_view',
@@ -180,6 +188,7 @@
             <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
                 <a class="item" href="<?=site_url('catalogos')?>">Catálogos</a>
             <?php endif ?>
+
             <div class="right menu">
                 <div class="item" style="height: 40px;">
                     <a href="#">
@@ -195,6 +204,7 @@
                 </div>
                 <a class="item" href="<?=site_url('logout')?>">Salir</a>
             </div>
+
         </div>
     </div>
 

@@ -8,8 +8,8 @@
 
                         <?php
                             $permisos_requeridos = array(
-                                'reporte_alumno.can_view',
-                                'reporte_mentor.can_view',
+                                'reporte_empleado.can_view',
+                                'reporte_operador.can_view',
                                 'reporte_admin.can_view',
                             );
                             if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
@@ -21,8 +21,8 @@
 
                         <?php
                             $permisos_requeridos = array(
-                                'reporte_alumno.can_view',
-                                'reporte_mentor.can_view',
+                                'reporte_empleado.can_view',
+                                'reporte_operador.can_view',
                                 'reporte_admin.can_view',
                             );
                             if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>
@@ -34,8 +34,8 @@
 
                         <?php
                             $permisos_requeridos = array(
-                                'reporte_alumno.can_view',
-                                'reporte_mentor.can_view',
+                                'reporte_empleado.can_view',
+                                'reporte_operador.can_view',
                                 'reporte_admin.can_view',
                             );
                             if (has_permission_or($permisos_requeridos, $permisos_usuario)) { ?>

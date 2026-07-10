@@ -28,16 +28,34 @@ class Acceso_sistema_model extends Model
     }
 
     public function get_accesos_sistema_rol($id_rol) {
-        // solo accesos del rol devueltos como una cadena separada por comas
-        $sql = "select string_agg(cod_opcion_sistema::text, ',') as accesos from acceso_sistema where id_rol = ?";
+        $sql = ""
+            ."select "
+                ."acs.cod_opcion_sistema, ops.nom_opcion_sistema "
+            ."from "
+                ."acceso_sistema acs "
+                ."left join opcion_sistema ops on acs.cod_opcion_sistema = ops.cod_opcion_sistema "
+            ."where "
+                ."acs.id_rol = ? "
+            ."order by "
+                ."acs.cod_opcion_sistema "
+            ."";
         $query = $this->db->query($sql, array($id_rol));
-        return $query->getRowArray();
+        return $query->getResultArray();
     }
 
 
     public function get_accesos_sistema_rol_usuario($id_usuario) {
         // solo accesos del rol al que pertenece el usuario
-        $sql = "select acs.cod_opcion_sistema, ops.nom_opcion_sistema from acceso_sistema acs left join opcion_sistema ops on acs.cod_opcion_sistema = ops.cod_opcion_sistema left join usuario usu on acs.id_rol = usu.id_rol where usu.id_usuario = ?";
+        $sql = ""
+            ."select "
+                ."acs.cod_opcion_sistema, ops.nom_opcion_sistema "
+            ."from "
+                ."acceso_sistema acs "
+                ."left join opcion_sistema ops on acs.cod_opcion_sistema = ops.cod_opcion_sistema "
+                ."left join usuario usu on acs.id_rol = usu.id_rol "
+            ."where "
+                ."usu.id_usuario = ? "
+            ."";
         $query = $this->db->query($sql, array($id_usuario));
         return $query->getResultArray();
     }

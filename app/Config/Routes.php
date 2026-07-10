@@ -5,7 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Admin::index', ['filter' => ['auth',]] );
+$routes->get('/', 'Incidentes::index', ['filter' => ['auth',]] );
+
 $routes->get('login', 'Admin::login');
 $routes->post('post_login', 'Admin::post_login');
 $routes->get('logout', 'Admin::logout');
@@ -25,8 +26,8 @@ $routes->get('usuario/nuevo_pwd/(:segment)', 'Usuario::nuevo_pwd/$1');
 $routes->post('usuario/actualizar_password', 'Usuario::actualizar_password', ['filter' => ['auth', 'perms_and:usuario.can_edit']] );
 $routes->get('usuario/existe/(:segment)', 'Usuario::existe/$1');
 
-
 $routes->get('rol/', 'Rol::index', ['filter' => ['auth', 'perms_and:rol.can_view']] );
+$routes->get('rol/detalle/(:segment)', 'Rol::detalle/$1', ['filter' => ['auth', 'perms_and:rol.can_view']] );
 
 $routes->get('opcion_sistema/', 'Opcion_sistema::index', ['filter' => ['auth', 'perms_and:opcion_sistema.can_edit']] );
 $routes->get('opcion_sistema/detalle/(:num)', 'Opcion_sistema::detalle/$1', ['filter' => ['auth', 'perms_and:opcion_sistema.can_edit']] );
@@ -60,17 +61,15 @@ $routes->get('recurso/nuevo', 'Recurso::nuevo', ['filter' => ['auth', 'perms_and
 $routes->post('recurso/guardar', 'Recurso::guardar', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
 $routes->post('recurso/eliminar', 'Recurso::eliminar', ['filter' => ['auth', 'perms_and:recurso.can_edit']] );
 
-$routes->get('proceso/', 'Proceso::index');
-
 $routes->get('reportes/', 'Reportes::index', ['filter' => ['auth', 'perms_and:reporte.can_view']] );
-$routes->get('reportes/bitacora', 'Reportes::bitacora', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->get('reportes/bitacora/(:segment)', 'Reportes::bitacora/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->get('reportes/asistencia', 'Reportes::asistencia', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->post('reportes/asistencia', 'Reportes::asistencia', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->get('reportes/asistencia/(:segment)', 'Reportes::asistencia/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->get('reportes/incidentes', 'Reportes::incidentes', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->post('reportes/incidentes', 'Reportes::incidentes', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
-$routes->get('reportes/incidentes/(:segment)', 'Reportes::incidentes/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_mentor.can_view,reporte_alumno.can_view']] );
+$routes->get('reportes/bitacora', 'Reportes::bitacora', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->get('reportes/bitacora/(:segment)', 'Reportes::bitacora/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->get('reportes/asistencia', 'Reportes::asistencia', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->post('reportes/asistencia', 'Reportes::asistencia', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->get('reportes/asistencia/(:segment)', 'Reportes::asistencia/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->get('reportes/incidentes', 'Reportes::incidentes', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->post('reportes/incidentes', 'Reportes::incidentes', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
+$routes->get('reportes/incidentes/(:segment)', 'Reportes::incidentes/$1', ['filter' => ['auth', 'perms_or:reporte_admin.can_view,reporte_operador.can_view,reporte_empleado.can_view']] );
 
 
 $routes->get('incidentes/', 'Incidentes::index', ['filter' => ['auth']] );
@@ -79,26 +78,26 @@ $routes->get('incidentes/empleado/(:num)', 'Incidentes::empleado/$1', ['filter' 
 $routes->post('incidentes/empleado/(:num)', 'Incidentes::empleado/$1', ['filter' => ['auth']] );
 
 
-$routes->get('dia_inhabil/nuevo', 'Dia_inhabil::nuevo', ['filter' => ['auth', ]] );
-$routes->get('dia_inhabil/detalle/(:num)', 'Dia_inhabil::detalle/$1', ['filter' => ['auth', ]] );
-$routes->post('dia_inhabil/guardar', 'Dia_inhabil::guardar', ['filter' => ['auth', ]] );
-$routes->post('dia_inhabil/eliminar', 'Dia_inhabil::eliminar', ['filter' => ['auth', ]] );
+$routes->get('dia_inhabil/nuevo', 'Dia_inhabil::nuevo', ['filter' => ['auth', 'perms_and:dia_inhabil.can_edit' ]] );
+$routes->get('dia_inhabil/detalle/(:num)', 'Dia_inhabil::detalle/$1', ['filter' => ['auth', 'perms_and:dia_inhabil.can_edit' ]] );
+$routes->post('dia_inhabil/guardar', 'Dia_inhabil::guardar', ['filter' => ['auth', 'perms_and:dia_inhabil.can_edit']] );
+$routes->post('dia_inhabil/eliminar', 'Dia_inhabil::eliminar', ['filter' => ['auth', 'perms_and:dia_inhabil.can_edit' ]] );
 
-$routes->get('justificante_masivo/nuevo', 'Justificante_masivo::nuevo', ['filter' => ['auth', ]] );
-$routes->get('justificante_masivo/detalle/(:num)', 'Justificante_masivo::detalle/$1', ['filter' => ['auth', ]] );
-$routes->post('justificante_masivo/guardar', 'Justificante_masivo::guardar', ['filter' => ['auth', ]] );
-$routes->post('justificante_masivo/eliminar', 'Justificante_masivo::eliminar', ['filter' => ['auth', ]] );
+$routes->get('justificante_masivo/nuevo', 'Justificante_masivo::nuevo', ['filter' => ['auth', 'perms_and:justificante_masivo.can_edit' ]] );
+$routes->get('justificante_masivo/detalle/(:num)', 'Justificante_masivo::detalle/$1', ['filter' => ['auth', 'perms_and:justificante_masivo.can_edit' ]] );
+$routes->post('justificante_masivo/guardar', 'Justificante_masivo::guardar', ['filter' => ['auth', 'perms_and:justificante_masivo.can_edit' ]] );
+$routes->post('justificante_masivo/eliminar', 'Justificante_masivo::eliminar', ['filter' => ['auth', 'perms_and:justificante_masivo.can_edit' ]] );
 
-$routes->get('vacacion/nuevo/(:num)', 'Justificante::nueva_vacacion/$1', ['filter' => ['auth', ]] );
-$routes->get('vacacion/detalle/(:num)', 'Justificante::detalle_vacacion/$1', ['filter' => ['auth', ]] );
-$routes->post('vacacion/guardar', 'Justificante::guardar_vacacion', ['filter' => ['auth', ]] );
-$routes->post('vacacion/eliminar', 'Justificante::eliminar', ['filter' => ['auth', ]] );
+$routes->get('vacacion/nuevo/(:num)', 'Justificante::nueva_vacacion/$1', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->get('vacacion/detalle/(:num)', 'Justificante::detalle_vacacion/$1', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->post('vacacion/guardar', 'Justificante::guardar_vacacion', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->post('vacacion/eliminar', 'Justificante::eliminar', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
 
-$routes->get('justificante/nuevo/(:num)', 'Justificante::nuevo_justificante/$1', ['filter' => ['auth', ]] );
-$routes->get('justificante/nuevo/(:num)/(:segment)', 'Justificante::nuevo_justificante/$1/$2', ['filter' => ['auth', ]] );
-$routes->get('justificante/detalle/(:num)', 'Justificante::detalle_justificante/$1', ['filter' => ['auth', ]] );
-$routes->post('justificante/guardar', 'Justificante::guardar_justificante', ['filter' => ['auth', ]] );
-$routes->post('justificante/eliminar', 'Justificante::eliminar', ['filter' => ['auth', ]] );
+$routes->get('justificante/nuevo/(:num)', 'Justificante::nuevo_justificante/$1', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->get('justificante/nuevo/(:num)/(:segment)', 'Justificante::nuevo_justificante/$1/$2', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->get('justificante/detalle/(:num)', 'Justificante::detalle_justificante/$1', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->post('justificante/guardar', 'Justificante::guardar_justificante', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
+$routes->post('justificante/eliminar', 'Justificante::eliminar', ['filter' => ['auth', 'perms_and:justificante.can_edit' ]] );
 
 
 $routes->get('empleado', 'Empleado::index', ['filter' => ['auth', 'perms_and:empleado.can_edit']] );

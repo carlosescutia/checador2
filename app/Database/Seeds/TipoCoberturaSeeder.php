@@ -8,6 +8,8 @@ class TipoCoberturaSeeder extends Seeder
 {
     public function run()
     {
+        $this->db->query('truncate tipo_cobertura restart identity cascade');
+
         $data = [
             [
                 'cve_tipo_cobertura' => 'dia',
@@ -26,7 +28,8 @@ class TipoCoberturaSeeder extends Seeder
                 'nom_tipo_cobertura' => 'Vacaciones',
             ],
         ];
-
         $this->db->table('tipo_cobertura')->insertBatch($data);
+
+        $this->db->query("select setval(pg_get_serial_sequence('tipo_cobertura', 'id_tipo_cobertura'), (select max(id_tipo_cobertura) from tipo_cobertura))");
     }
 }

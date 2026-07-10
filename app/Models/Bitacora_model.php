@@ -24,7 +24,7 @@ class Bitacora_model extends Model
     {
         $dbutil = \Config\Database::utils();
 
-        if ($id_rol == 'mentor') {
+        if ($id_rol == 'operador') {
             $nom_login = '%';
         }
         if ($id_rol == 'admin') {

@@ -61,7 +61,6 @@ class Empleado extends BaseController
                 'cod_empleado' => $empleado['nom_empleado'],
                 'nom_empleado' => $empleado['nom_empleado'],
                 'activo' => array_key_exists('activo', $empleado) ? 1 : 0,
-                'id_horario' => $empleado['id_horario'],
             );
             // guardar
             $this->empleado_model->save($data);

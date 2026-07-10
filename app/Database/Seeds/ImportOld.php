@@ -20,22 +20,17 @@ class ImportOld extends Seeder
         */
         $this->db->query('truncate bitacora restart identity');
 
+
         /*
         ------------------
         seeding de catalogos de aplicación
         ------------------
         */
-        $this->db->query('truncate tipo_incidente restart identity');
         $this->call('TipoIncidenteSeeder');
-
-        $this->db->query('truncate tipo_justificante restart identity');
         $this->call('TipoJustificanteSeeder');
-
-        $this->db->query('truncate tipo_cobertura restart identity');
         $this->call('TipoCoberturaSeeder');
-
-        $this->db->query('truncate dia restart identity');
         $this->call('DiaSeeder');
+
 
         /*
         ------------------

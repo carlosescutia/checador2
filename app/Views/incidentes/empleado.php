@@ -130,11 +130,7 @@
                                             endswitch
                                         ?>
                                         <td class="col-6">
-                                            <?php if ($incidentes_empleado_item['tipo_justificante'] == 'hc'): ?>
-                                                <?=$texto?>
-                                            <?php else:?>
-                                                <a href="<?=$url?>"><?=$texto?></a>
-                                            <?php endif ?>
+                                            <?=$texto?>
                                         </td>
                                     </tr>
                                     <?php endforeach ?>

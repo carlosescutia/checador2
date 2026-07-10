@@ -8,6 +8,8 @@ class DiaSeeder extends Seeder
 {
     public function run()
     {
+        $this->db->query('truncate dia restart identity cascade');
+
         $data = [
             [
                 'id_dia' => '1',
@@ -38,7 +40,8 @@ class DiaSeeder extends Seeder
                 'nom_dia' => 'Domingo',
             ],
         ];
-
         $this->db->table('dia')->insertBatch($data);
+
+        $this->db->query("select setval(pg_get_serial_sequence('dia', 'id_dia'), (select max(id_dia) from dia))");
     }
 }

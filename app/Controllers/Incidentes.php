@@ -17,44 +17,61 @@ class Incidentes extends BaseController
 
     public function index()
     {
-        $filtros = $this->request->getPost();
-        if ($filtros) {
-            $mes = $filtros['mes'];
-            $anio = $filtros['anio'];
-            $filtros_incidentes = array(
-                'mes' => $mes,
-                'anio' => $anio,
-            );
-            $this->session->set($filtros_incidentes);
-        } else {
-            if ( $this->session->mes ) {
-                $mes = $this->session->mes;
-            } else {
-                $mes = date('n');
-            }
-            if ( $this->session->anio ) {
-                $anio = $this->session->anio;
-            } else {
-                $anio = date('Y');
-            }
-        }
-        $data['mes'] = $mes;
-        $data['anio'] = $anio;
-        $tolerancia_retardo = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_retardo');
-        $tolerancia_asistencia = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_asistencia');
-        $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
-        $data['url_actual'] = site_url('incidentes');
-        $data['incidentes_empleados'] = $this->incidente_model->get_lista_incidentes_empleados_todos($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia);
-        $data['dias_inhabiles'] = $this->dia_inhabil_model->get_dias_inhabiles($anio);
-        $data['justificantes_masivos'] = $this->justificante_masivo_model->get_justificantes_masivos($mes, $anio);
+        $data = [];
+        $data += $this->fn_sis->get_userdata();
 
-        return view('templates/header')
-            .view('incidentes/index', $data)
-            .view('templates/footer');
+        $permisos_requeridos = array(
+            'rol_admin',
+            'rol_operador',
+        );
+        $permisos_usuario = $data['permisos_usuario'];
+
+        if (has_permission_or($permisos_requeridos, $permisos_usuario)) {
+            $filtros = $this->request->getPost();
+            if ($filtros) {
+                $mes = $filtros['mes'];
+                $anio = $filtros['anio'];
+                $filtros_incidentes = array(
+                    'mes' => $mes,
+                    'anio' => $anio,
+                );
+                $this->session->set($filtros_incidentes);
+            } else {
+                if ( $this->session->mes ) {
+                    $mes = $this->session->mes;
+                } else {
+                    $mes = date('n');
+                }
+                if ( $this->session->anio ) {
+                    $anio = $this->session->anio;
+                } else {
+                    $anio = date('Y');
+                }
+            }
+            $data['mes'] = $mes;
+            $data['anio'] = $anio;
+            $tolerancia_retardo = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_retardo');
+            $tolerancia_asistencia = $this->parametro_sistema_model->get_parametro_sistema_nom('tolerancia_asistencia');
+            $data['anios_disponibles'] = $this->asistencia_model->get_anios_disponibles();
+            $data['url_actual'] = site_url('incidentes');
+            $data['incidentes_empleados'] = $this->incidente_model->get_lista_incidentes_empleados_todos($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia);
+            $data['dias_inhabiles'] = $this->dia_inhabil_model->get_dias_inhabiles($anio);
+            $data['justificantes_masivos'] = $this->justificante_masivo_model->get_justificantes_masivos($mes, $anio);
+
+            return view('templates/header')
+                .view('incidentes/index', $data)
+                .view('templates/footer');
+        } else {
+            $id_empleado = $data['userdata']['id_usuario'];
+            return redirect()->to(site_url('incidentes/empleado/'.$id_empleado));
+        }
     }
 
     public function empleado($id_empleado)
     {
+        $data = [];
+        $data += $this->fn_sis->get_userdata();
+
         $filtros = $this->request->getPost();
         if ($filtros) {
             $mes = $filtros['mes'];

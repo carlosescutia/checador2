@@ -1,8 +1,15 @@
 <div class="ui violet segment">
     <h4 class="ui center aligned header">
-        <a class="circular ui right floated primary mini icon button no-print" href="<?= site_url('vacacion/nuevo/'.$empleado['id_empleado']) ?>">
-            <i class="icon add"></i>
-        </a>
+        <?php
+            $permisos_requeridos = array(
+                'justificante.can_edit',
+            );
+        ?>
+        <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+            <a class="circular ui right floated primary mini icon button no-print" href="<?= site_url('vacacion/nuevo/'.$empleado['id_empleado']) ?>">
+                <i class="icon add"></i>
+            </a>
+        <?php endif ?>
         Vacaciones
     </h4>
     <div class="ui divider"></div>
@@ -40,9 +47,18 @@
                                 );
                                 $fecha = strtotime($vacaciones_empleado_item['fecha']);
                             ?>
-                            <a href="<?= site_url('vacacion/detalle/' . $vacaciones_empleado_item['id_justificante']) ?>">
+                            <?php
+                                $permisos_requeridos = array(
+                                    'justificante.can_edit',
+                                );
+                            ?>
+                            <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                                <a href="<?= site_url('vacacion/detalle/' . $vacaciones_empleado_item['id_justificante']) ?>">
+                            <?php endif ?>
                                 <?= datefmt_format($fmt, $fecha) ?>
-                            </a>
+                            <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                                </a>
+                            <?php endif ?>
                         </td>
                         <td>
                             <?php
@@ -65,15 +81,22 @@
                             <?= $detalle ?> (<?= $vacaciones_empleado_item['dias'] ?>d)
                         </td>
                         <td class="no-print">
-                            <form class="ui form" method="post" action="/justificante/eliminar" id="frm_elim_justificante<?=$vacaciones_empleado_item['id_justificante']?>">
-                                <input type="hidden" name="id_justificante" id="id_justificante" value="<?= $vacaciones_empleado_item['id_justificante'] ?>" >
-                                <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('incidentes/empleado/'.$empleado['id_empleado']) ?>">
-                                <?php
-                                    $mensaje = 'Se eliminará la vacación <strong>' . datefmt_format($fmt, $fecha) . '</strong>.<br>¿Está seguro?' ;
-                                    $forma = '#frm_elim_justificante' . $vacaciones_empleado_item['id_justificante'] ;
-                                ?>
-                                <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
-                            </form>
+                            <?php
+                                $permisos_requeridos = array(
+                                    'justificante.can_edit',
+                                );
+                            ?>
+                            <?php if (has_permission_or($permisos_requeridos, $permisos_usuario)): ?>
+                                <form class="ui form" method="post" action="/justificante/eliminar" id="frm_elim_justificante<?=$vacaciones_empleado_item['id_justificante']?>">
+                                    <input type="hidden" name="id_justificante" id="id_justificante" value="<?= $vacaciones_empleado_item['id_justificante'] ?>" >
+                                    <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('incidentes/empleado/'.$empleado['id_empleado']) ?>">
+                                    <?php
+                                        $mensaje = 'Se eliminará la vacación <strong>' . datefmt_format($fmt, $fecha) . '</strong>.<br>¿Está seguro?' ;
+                                        $forma = '#frm_elim_justificante' . $vacaciones_empleado_item['id_justificante'] ;
+                                    ?>
+                                    <a href="#" onclick="confirm_action('<?=$mensaje?>','<?=$forma?>')" ><span class="ui red text"><i class="icon times circle outline"></span></i></a>
+                                </form>
+                            <?php endif ?>
                         </td>
                     </tr>
                 <?php endforeach ?>
