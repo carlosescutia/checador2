@@ -58,8 +58,8 @@ class Empleado extends BaseController
             }
 
             $data += array(
-                'cod_empleado' => $empleado['nom_empleado'],
                 'nom_empleado' => $empleado['nom_empleado'],
+                'cod_empleado' => $empleado['cod_empleado'],
                 'activo' => array_key_exists('activo', $empleado) ? 1 : 0,
             );
             // guardar

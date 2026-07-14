@@ -17,8 +17,8 @@
                                 <input type="text" name="nom_empleado" id="nom_empleado" value="<?=$empleado['nom_empleado']?>">
                             </div>
                             <div class="two wide field">
-                                <label>Clave</label>
-                                <input type="text" name="cod_empleado" id="cod_empleado" value="<?=$empleado['cod_empleado']?>" readonly>
+                                <label>Clave checador</label>
+                                <input type="text" name="cod_empleado" id="cod_empleado" value="<?=$empleado['cod_empleado']?>">
                             </div>
                             <div class="two wide field">
                                 <label>Activo</label>

@@ -17,7 +17,7 @@
                                 <input type="text" name="nom_empleado" id="nom_empleado">
                             </div>
                             <div class="two wide field">
-                                <label>Clave</label>
+                                <label>Clave checador</label>
                                 <input type="text" name="cod_empleado" id="cod_empleado">
                             </div>
                             <div class="two wide field">
