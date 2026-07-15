@@ -9,7 +9,7 @@
                     </h1>
                 </div>
 
-                <table class="ui very basic striped unstackable table">
+                <table class="ui very basic striped unstackable table" id="tbl_usuarios">
                     <thead>
                         <tr>
                             <th>Nombre / rol</th>
@@ -66,3 +66,26 @@
 
     </div>
 </div>
+
+<script>
+    $(document).ready( function() {
+
+        $('.ui.radio.checkbox').checkbox();
+
+        $('.estado').change( function() {
+            this.form.submit();
+        });
+
+        $('#tbl_usuarios').DataTable( {
+            responsive: true,
+            language: {
+                url: '<?=base_url()?>assets/js/es-MX.json',
+                lengthLabels: { 
+                    '-1': 'Todos'
+                },
+            },
+            lengthMenu: [10, 50, -1],
+        });
+    });
+
+</script>

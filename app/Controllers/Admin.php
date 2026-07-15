@@ -50,6 +50,7 @@ class Admin extends BaseController
                 if ( password_verify($password, $usuario['password']) ) {
                     $userdata = array(
                         'id_usuario' => $usuario['id_usuario'],
+                        'id_empleado' => $usuario['id_empleado'],
                         'id_rol' => $usuario['id_rol'],
                         'nom_usuario' => $usuario['nom_usuario'],
                         'nom_login' => $usuario['nom_login'],

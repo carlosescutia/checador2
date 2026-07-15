@@ -10,10 +10,11 @@ class Empleado_model extends Model
     protected $primaryKey = 'id_empleado';
     protected $allowedFields = [
         'id_empleado',
-        'cod_empleado',
         'nom_empleado',
+        'cod_empleado',
         'activo',
-        'id_horario',
+        'correo',
+        'id_usuario',
     ];
 
     public function get_empleados($filtro)

@@ -28,7 +28,12 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="id_empleado" id="id_empleado">
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label>Correo / login</label>
+                                <input type="text" name="correo" id="correo">
+                            </div>
+                        </div>
 
                         <div class="ui error message"></div>
                     </form>

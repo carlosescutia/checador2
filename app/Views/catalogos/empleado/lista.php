@@ -52,11 +52,14 @@
                                         <label></label>
                                     </div>
                                     <input type="hidden" name="id_empleado" id="id_empleado" value="<?=$empleados_item['id_empleado']?>">
+                                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?=$empleados_item['id_usuario']?>">
+                                    <input type="hidden" name="nom_empleado" id="nom_empleado" value="<?=$empleados_item['nom_empleado']?>">
                                 </form>
                             </td>
                             <td>
                                 <form class="ui form" method="post" action="/empleado/eliminar" id="frm_elim_empleado<?=$empleados_item['id_empleado']?>">
                                     <input type="hidden" name="id_empleado" id="id_empleado" value="<?= $empleados_item['id_empleado'] ?>" >
+                                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?= $empleados_item['id_usuario'] ?>" >
                                     <input type="hidden" name="url_actual" id="url_actual" value="<?= site_url('empleado') ?>">
                                     <?php
                                         $mensaje = 'Se eliminará el empleado <strong>' . $empleados_item['nom_empleado'] . '</strong>.<br>¿Está seguro?' ;

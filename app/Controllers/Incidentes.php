@@ -62,7 +62,7 @@ class Incidentes extends BaseController
                 .view('incidentes/index', $data)
                 .view('templates/footer');
         } else {
-            $id_empleado = $data['userdata']['id_usuario'];
+            $id_empleado = $data['userdata']['id_empleado'];
             return redirect()->to(site_url('incidentes/empleado/'.$id_empleado));
         }
     }
