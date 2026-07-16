@@ -41,7 +41,7 @@ class Importar extends BaseController
             // Cargar datos en bd
             if ( ($file = fopen($nombre_archivo_fs, "r")) !== FALSE ) {
                 while( ($linea = fgetcsv($file, 1000, "\t")) !== FALSE ) {
-                    $id_empleado = $linea['0'];
+                    $cod_empleado = $linea['0'];
                     $fecha = substr($linea[1], 0, strpos($linea[1], ' '));
                     $hora = substr($linea[1], strpos($linea[1], ' '), strlen($linea[1]));
 
@@ -51,7 +51,7 @@ class Importar extends BaseController
                     if ($dias < $dias_cargar) {
                         if ( $linea and !is_null($linea[0]) ) {
                             $data = array(
-                                'id_empleado' => $id_empleado,
+                                'cod_empleado' => $cod_empleado,
                                 'fecha' => $fecha,
                                 'hora' => $hora,
                             );
