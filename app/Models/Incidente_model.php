@@ -8,6 +8,8 @@ class Incidente_model extends Model
 {
     public function get_lista_incidentes_empleados_todos($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia)
     {
+        // listado de incidentes de empleados activos
+        // devuelve nom_empleado y num_incidentes
         $fech_ini = $anio . "-" . $mes . "-01";
         $fech_fin = date("Y-m-t", strtotime($fech_ini));
         $sql = ""
@@ -27,26 +29,10 @@ class Incidente_model extends Model
         return $query->getResultArray();
     }
 
-    public function get_num_incidentes_empleado($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado)
-    {
-        $fech_ini = $anio . "-" . $mes . "-01";
-        $fech_fin = date("Y-m-t", strtotime($fech_ini));
-        $sql = ""
-            ."select "
-                ."count(j.cve_tipo_incidente) as num_incidentes "
-            ."from "
-                ."empleado e "
-                ."left join justificacion_periodo(?,?,?,?) j on j.id_empleado = e.id_empleado and j.cve_tipo_incidente is not null and j.tipo_justificante is null "
-            ."where "
-                ."e.id_empleado = ? "
-                ."and e.activo = 1 "
-            ."";
-        $query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado));
-        return $query->getRowArray()['num_incidentes'] ?? null ;
-    }
-
     public function get_incidentes_empleado($id_empleado, $mes, $anio, $tolerancia_retardo, $tolerancia_asistencia)
     {
+        // detalle de incidentes de un empleado
+        // devuelve incidentes y justificantes
         $fech_ini = $anio . "-" . $mes . "-01";
         $fech_fin = date("Y-m-t", strtotime($fech_ini));
         $sql = ""
@@ -82,8 +68,29 @@ class Incidente_model extends Model
         return $query->getResultArray();
     }
 
-    public function get_incidentes_empleados($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia, $salida)
+    public function get_num_incidentes_empleado($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado)
     {
+        // numero de incidentes de un empleado
+        $fech_ini = $anio . "-" . $mes . "-01";
+        $fech_fin = date("Y-m-t", strtotime($fech_ini));
+        $sql = ""
+            ."select "
+                ."count(j.cve_tipo_incidente) as num_incidentes "
+            ."from "
+                ."empleado e "
+                ."left join justificacion_periodo(?,?,?,?) j on j.id_empleado = e.id_empleado and j.cve_tipo_incidente is not null and j.tipo_justificante is null "
+            ."where "
+                ."e.id_empleado = ? "
+                ."and e.activo = 1 "
+            ."";
+        $query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado));
+        return $query->getRowArray()['num_incidentes'] ?? null ;
+    }
+
+    public function get_incidentes_empleados_mes($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado, $id_rol, $salida)
+    {
+        // incidentes de empleados activos por mes - nuevo: parametrizado para mostrar todos (operador) o individual (empleado)
+        // devuelve incidentes y justificantes
         $dbutil = \Config\Database::utils();
 
         $fech_ini = $anio . "-" . $mes . "-01";
@@ -112,10 +119,23 @@ class Incidente_model extends Model
             ."from  "
                 ."justificacion_periodo(?,?,?,?) j  "
                 ."left join tipo_incidente ti on ti.cve_tipo_incidente = j.cve_tipo_incidente "
-            ."order by "
-                ."j.fecha, j.cve_tipo_cobertura "
-            ;
-        $query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia));
+            ."";
+
+        $parametros = array();
+        array_push($parametros, "$fech_ini");
+        array_push($parametros, "$fech_fin");
+        array_push($parametros, "$tolerancia_retardo");
+        array_push($parametros, "$tolerancia_asistencia");
+
+        if ( $id_rol == 'empleado' ) {
+            $filtro_empleado = 'where j.id_empleado = ' . $id_empleado;
+        } else {
+            $filtro_empleado = '';
+        }
+
+        $sql .= $filtro_empleado;
+        $sql .= ' order by j.fecha, j.cve_tipo_cobertura ';
+        $query = $this->db->query($sql, $parametros);
 
         if ($salida == 'csv') {
             $delimiter = ",";
@@ -127,8 +147,9 @@ class Incidente_model extends Model
         }
     }
 
-    public function get_num_incidentes_empleados($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia)
+    public function get_num_incidentes_empleados_mes($mes, $anio, $tolerancia_retardo, $tolerancia_asistencia)
     {
+        // número incidentes de empleados activos por mes - nuevo: parametrizado para calcular todos (operador) o individual (empleado)
         $fech_ini = $anio . "-" . $mes . "-01";
         $fech_fin = date("Y-m-t", strtotime($fech_ini));
         $sql = ""
@@ -146,8 +167,11 @@ class Incidente_model extends Model
         return $query->getResultArray() ;
     }
 
-    public function get_incidentes_empleados_periodo($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia, $salida)
+    public function get_incidentes_empleados_periodo($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia, $id_empleado, $id_rol, $salida)
     {
+        // incidentes de empleados activos por periodo
+        // devuelve incidentes
+        // NO DEVUELVE JUSTIFICANTES
         $dbutil = \Config\Database::utils();
 
         $sql = ""
@@ -159,10 +183,25 @@ class Incidente_model extends Model
             ."where "
                 ."coalesce(j.cve_tipo_incidente, '') <> '' "
                 ."and coalesce(j.id_justificante, 0) = 0 "
-            ."order by "
-                ."j.fecha, j.cve_tipo_cobertura "
             ;
-        $query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia));
+
+        $parametros = array();
+        array_push($parametros, "$fech_ini");
+        array_push($parametros, "$fech_fin");
+        array_push($parametros, "$tolerancia_retardo");
+        array_push($parametros, "$tolerancia_asistencia");
+
+        if ( $id_rol == 'empleado' ) {
+            $filtro_empleado = 'and j.id_empleado = ' . $id_empleado;
+        } else {
+            $filtro_empleado = '';
+        }
+
+        $sql .= $filtro_empleado;
+        $sql .= ' order by j.fecha, j.cve_tipo_cobertura ';
+        $query = $this->db->query($sql, $parametros);
+
+        //$query = $this->db->query($sql, array($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia));
 
         if ($salida == 'csv') {
             $delimiter = ",";
@@ -176,6 +215,7 @@ class Incidente_model extends Model
 
     public function get_num_incidentes_empleados_periodo($fech_ini, $fech_fin, $tolerancia_retardo, $tolerancia_asistencia)
     {
+        // número incidentes de empleados activos por periodo
         $sql = ""
             ."select "
                 ."e.id_empleado, count(j.cve_tipo_incidente) as num_incidentes "

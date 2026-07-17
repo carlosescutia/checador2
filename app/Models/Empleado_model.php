@@ -62,5 +62,47 @@ class Empleado_model extends Model
         return $query->getRowArray();
     }
 
-}
+    public function get_empleados_reporte($filtro_activo, $id_empleado, $id_rol)
+    {
+        $sql = ""
+            ."select "
+                ."e.* "
+            ."from "
+                ."empleado e "
+            ."where "
+                ."true "
+            ."";
 
+        if ( $id_rol == 'empleado' ) {
+            $filtro_empleado = 'and e.id_empleado = ' . $id_empleado . ' ';
+        } else {
+            $filtro_empleado = '';
+        }
+
+        $sql .= $filtro_empleado;
+
+        switch ($filtro_activo) {
+            case 'activos':
+                $condicion = "and activo = 1 ";
+                break;
+            case 'inactivos':
+                $condicion = "and coalesce(activo, 0) = 0 ";
+                break;
+            case 'todos':
+                $condicion = "";
+                break;
+            default:
+                $condicion = "";
+        }
+
+        $sql .= $condicion;
+        $sql .= ""
+            ."order by "
+                ."nom_empleado "
+            ."";
+        $query = $this->db->query($sql);
+        return $query->getResultArray();
+
+    }
+
+}

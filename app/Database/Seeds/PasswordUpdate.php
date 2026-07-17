@@ -14,7 +14,7 @@ class PasswordUpdate extends Seeder
         foreach ($usuarios as $usuarios_item) {
             echo 'Usuario: ' . $usuarios_item['nom_usuario'] . " -> ";
             echo substr($usuarios_item['password'], 0, 4) . " -> ";
-            if ( substr($usuarios_item['password'], 0, 4) !== '$2y$' ) {
+            if ( substr($usuarios_item['password'], 0, 4) !== '$2y$' and $usuarios_item['password'] !== null ) {
                 echo 'Actualizando pwd' ;
                 $data = array(
                     'id_usuario' => $usuarios_item['id_usuario'],

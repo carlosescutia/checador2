@@ -41,7 +41,7 @@ class ImportOld extends Seeder
         /* catalogos */
         $this->db->query('truncate empleado restart identity cascade');
         $this->db->query('insert into empleado (id_empleado, cod_empleado, nom_empleado, activo)
-            select cve_empleado, cod_empleado, nom_empleado, activo from old.empleados');
+            select cve_empleado, cod_empleado::int, nom_empleado, activo from old.empleados');
         $this->db->query("select setval(pg_get_serial_sequence('empleado', 'id_empleado'), (select max(id_empleado) from empleado))");
 
         $this->db->query('truncate periodo_vacacional restart identity');
@@ -66,7 +66,7 @@ class ImportOld extends Seeder
         $this->db->query("select setval(pg_get_serial_sequence('horario', 'id_horario'), (select max(id_horario) from horario))");
 
         $this->db->query('truncate asistencia restart identity');
-        $this->db->query('insert into asistencia (id_asistencia, id_empleado, fecha, hora)
+        $this->db->query('insert into asistencia (id_asistencia, cod_empleado, fecha, hora)
             select cve_asistencia, cve_empleado, fecha, hora from old.asistencias');
         $this->db->query("select setval(pg_get_serial_sequence('asistencia', 'id_asistencia'), (select max(id_asistencia) from asistencia))");
 
